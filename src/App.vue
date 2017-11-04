@@ -3,9 +3,9 @@
     rappi-header
 
     rappi-loader(v-show="isLoading")
-    section.section
-      nav.nav.has-shadow(v-show="!isLoading")
-        .container
+    section.section(v-show="!isLoading")
+      nav.nav
+        .container.has-shadow
           input.input.is-large(
             type="text", placeholder="Buscar algo"
             v-model="searchQuery"
@@ -19,7 +19,9 @@
       .container.results
         .columns.is-multiline
           .column.is-one-quarter(v-for="t in tracks")
-            rappi-product(:product="t")
+            rappi-product(
+              :class="{ 'is-active': t.id === selectedProduct  }",
+              :product="t", @select="setSelectedProduct" )
 
     rappi-footer
 </template>
@@ -41,7 +43,8 @@ export default {
     return {
       searchQuery: '',
       tracks: [],
-      isLoading: false
+      isLoading: false,
+      selectedProduct: ''
     }
   },
 
@@ -65,6 +68,11 @@ export default {
           this.tracks = res.tracks.items
           this.isLoading = false
         })
+    },
+
+    setSelectedProduct (id) {
+      console.log(id)
+      this.selectedProduct = id
     }
   }
 }
@@ -75,5 +83,9 @@ export default {
 ;
   .results {
     margin-top: 50px;
+  }
+
+  .is-active {
+    border: 3px #23d160 solid;
   }
 </style>
