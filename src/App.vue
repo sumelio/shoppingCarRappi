@@ -1,12 +1,9 @@
 <template lang="pug">
   #app
-    h1 {{ msg }}
-    p {{ 1 + 1 }}
-    p {{ 'Hola ' + 'Mundo' }}
-    p {{ person.name }}
-    p {{ person.name.toUpperCase() }}
-    p {{ JSON.stringify(person) }}
-    p {{ true ? 'yes' : 'nop' }}
+    input(v-model="name" @keyup="format" )
+    button(v-on:click="format") Format
+
+    p {{formatedName}}
 </template>
 
 <script>
@@ -14,10 +11,14 @@ export default {
   name: 'app',
   data () {
     return {
-      msg: 'Hola Vue',
-      person: {
-        name: 'Juan'
-      }
+      name: '',
+      formatedName: ''
+    }
+  },
+
+  methods: {
+    format () {
+      this.formatedName = this.name.split(' ').join('-').toUpperCase()
     }
   }
 }
