@@ -2,8 +2,9 @@
   #app
     rappi-header
 
+    rappi-loader(v-show="isLoading")
     section.section
-      nav.nav.has-shadow
+      nav.nav.has-shadow(v-show="!isLoading")
         .container
           input.input.is-large(
             type="text", placeholder="Buscar algo"
@@ -16,28 +17,31 @@
           p
             small {{ searchMessage }}
       .container.results
-        .columns
-          .column(v-for="t in tracks")
-            | {{ t.name }} - {{ t.artists[0].name }}
+        .columns.is-multiline
+          .column.is-one-quarter(v-for="t in tracks")
+            rappi-product(:product="t")
 
     rappi-footer
 </template>
 
 <script>
 
-import trackService from './services/tracks'
-import RappiFooter from './components/layout/Footer.vue'
-import RappiHeader from './components/layout/Header.vue'
+import trackService from '@/services/tracks'
+import RappiFooter from '@/components/layout/Footer.vue'
+import RappiHeader from '@/components/layout/Header.vue'
+import RappiProduct from '@/components/Product.vue'
+import RappiLoader from '@/components/shared/Loader.vue'
 
 export default {
   name: 'app',
 
-  components: { RappiFooter, RappiHeader },
+  components: { RappiFooter, RappiHeader, RappiProduct, RappiLoader },
 
   data () {
     return {
       searchQuery: '',
-      tracks: []
+      tracks: [],
+      isLoading: false
     }
   },
 
@@ -53,10 +57,13 @@ export default {
       // this.tracks = tracks
       if (!this.searchQuery.length > 0) { return }
 
+      this.isLoading = true
+
       trackService.search(this.searchQuery)
         .then(res => {
           console.log(res)
           this.tracks = res.tracks.items
+          this.isLoading = false
         })
     }
   }
