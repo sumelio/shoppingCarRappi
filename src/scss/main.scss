@@ -1,1 +1,152 @@
-@import '../../node_modules/bulma/bulma.sass'
+@import '../../node_modules/bulma/bulma.sass';
+
+#app {
+    height: 133vh;
+}
+
+.side-bar {
+  background-color: #ff5358;
+  width: 10%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header {
+  height: 9%;
+  box-shadow: 0010px10px#D9D9D9;
+}
+
+nav {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.content {
+  width: 100%;
+  display: flex;
+  height: 100vh;
+}
+
+.user {
+  width: 14%;
+}
+.user.fa, .user p {
+  color: #000;
+}
+.user p {
+  color: #5d557f!important;
+  font-weight: bold;
+}
+.user.fa {
+  margin-top: 10px;
+  margin-left: 5px;
+}
+.user.fa-user-circle-o {
+  margin-bottom: 6px;
+}
+.user.fa-sort-desc {
+  margin-right: 20px;
+  margin-bottom: 10px;
+}
+.logo img {
+  width: 110px;
+  margin-left: 15px;
+}
+.search-bar {
+  width: 40%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 8px;
+}
+.container {
+  display: flex;
+  align-items: center;
+}
+.search-bar.search {
+  width: 100%;
+  padding: 8px;
+  border-radius: 9px;
+  box-sizing: border-box;
+  font-size: 16px;
+}
+.logo {
+  margin-top:4px;
+}
+.search-bar.search:focus {
+  outline: none;
+  box-shadow: 002px2px#ff5358;
+}
+.first, .last {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+.last.f a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.last p {
+  margin-bottom: 20px;
+}
+.f a{
+  color: #fff;
+  font-size: 30px;
+  margin-top: 20px;
+  text-align: center;
+}
+p {
+  font-size: 16px;
+  color: #fff;
+}
+.content-down h2 {
+  font-size: 22px;
+  margin-left: 35px;
+  font-weight: bold;
+  margin-top: 25px;
+}
+.content {
+  width: 100%;
+  margin: 0;
+  height: 91%;
+}
+.content-down {
+  width: 90%;
+}
+.container-images {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.over {
+  background-image: url("http://s03.s3c.es/imag/_v0/771x421/0/1/5/dos-carretera-peli.jpg");
+  background-repeat: no-repeat;
+  height: 30vh;
+  width: 33%;
+  margin-left: 35px;
+  position: relative;
+}
+.color {
+  background: rgba(255,83,88,.8);
+  width: 95.5%;
+  height: 50%;
+  position: absolute;
+  bottom: 0;
+}
+.over h4, .over h6 {
+  color: #fff;
+  width: 90%;
+  margin: 0px auto 0px auto;
+}
+.over h4 {
+  margin-bottom: 10px;
+}
