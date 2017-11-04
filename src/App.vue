@@ -1,12 +1,13 @@
 <template lang="pug">
   #app
-    h1 {{ msg }}
-    p {{ 1 + 1 }}
-    p {{ 'Hola ' + 'Mundo' }}
-    p {{ person.name }}
-    p {{ person.name.toUpperCase() }}
-    p {{ JSON.stringify(person) }}
-    p {{ true ? 'yes' : 'nop' }}
+    input(v-model="name")
+    input(v-model="lastName")
+
+    p {{fullName}}
+    label edad
+    input(v-model="yearborh")
+
+    p {{age}}
 </template>
 
 <script>
@@ -14,10 +15,25 @@ export default {
   name: 'app',
   data () {
     return {
-      msg: 'Hola Vue',
-      person: {
-        name: 'Juan'
-      }
+      name: '',
+      lastName: '',
+      yearborh: 1990
+    }
+  },
+
+  computed: {
+    fullName () {
+    //  return this.name + this.lastName
+      return `${this.name}  ${this.lastName}`
+    },
+    age () {
+      return 2017 - this.yearborh
+    }
+  },
+
+  watch: { // Patron observable
+    name (newVal, oldVal) {
+      console.log(newVal, oldVal)
     }
   }
 }
