@@ -15,15 +15,19 @@
             small {{ searchMessage }}
       .container.results
         .columns
-          .cloumn(v-for="t in tracks") {{ t.name }}
+          .column(v-for="t in tracks")
+            | {{ t.name }} - {{ t.artists[0].name }}
 </template>
 
 <script>
-const tracks = [
-  { name: 'Muchacha', artist: 'Luis ALbert' },
-  { name: 'Hoy aca en el baile', artist: 'El Pepo' },
-  { name: 'I was made for loving you', artist: 'Kiss' }
-]
+
+// import trackService from './services/track.js'
+import trackService from './services/tracks'
+// const tracks = [
+//   { name: 'Muchacha', artist: 'Luis ALbert' },
+//   { name: 'Hoy aca en el baile', artist: 'El Pepo' },
+//   { name: 'I was made for loving you', artist: 'Kiss' }
+// ]
 
 export default {
   name: 'app',
@@ -43,7 +47,14 @@ export default {
   methods: {
     search () {
       // console.log(this.searchQuery)
-      this.tracks = tracks
+      // this.tracks = tracks
+      if (!this.searchQuery.length > 0) { return }
+
+      trackService.search(this.searchQuery)
+        .then(res => {
+          console.log(res)
+          this.tracks = res.tracks.items
+        })
     }
   }
 }
