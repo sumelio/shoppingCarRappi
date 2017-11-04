@@ -2,6 +2,9 @@
   #app
     rappi-header
 
+    rappi-notification(v-show="isShowNotification")
+      p(slot="body") No se encontraron resultados
+
     rappi-loader(v-show="isLoading")
     section.section(v-show="!isLoading")
       nav.nav
@@ -29,21 +32,27 @@
 <script>
 
 import trackService from '@/services/tracks'
+
 import RappiFooter from '@/components/layout/Footer.vue'
 import RappiHeader from '@/components/layout/Header.vue'
+
 import RappiProduct from '@/components/Product.vue'
+
+import RappiNotification from '@/components/shared/Notification.vue'
 import RappiLoader from '@/components/shared/Loader.vue'
 
 export default {
   name: 'app',
 
-  components: { RappiFooter, RappiHeader, RappiProduct, RappiLoader },
+  components: { RappiFooter, RappiHeader, RappiProduct, RappiLoader, RappiNotification },
 
   data () {
     return {
       searchQuery: '',
       tracks: [],
       isLoading: false,
+      isShowNotification: false,
+
       selectedProduct: ''
     }
   },
@@ -54,17 +63,29 @@ export default {
     }
   },
 
+  watch: {
+    isShowNotification () {
+      if (this.isShowNotification) {
+        setTimeout(() => {
+          console.log(this.isShowNotification)
+          this.isShowNotification = false
+        }, 3000)
+      }
+    }
+  },
+
   methods: {
     search () {
       // console.log(this.searchQuery)
       // this.tracks = tracks
       if (!this.searchQuery.length > 0) { return }
 
-      this.isLoading = true
+      this.isLoading = false
 
       trackService.search(this.searchQuery)
         .then(res => {
           console.log(res)
+          this.isShowNotification = res.tracks.total === 0
           this.tracks = res.tracks.items
           this.isLoading = false
         })
