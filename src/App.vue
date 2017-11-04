@@ -1,23 +1,22 @@
 <template lang="pug">
   #app
-    h1 {{ msg }}
-    p {{ 1 + 1 }}
-    p {{ 'Hola ' + 'Mundo' }}
-    p {{ person.name }}
-    p {{ person.name.toUpperCase() }}
-    p {{ JSON.stringify(person) }}
-    p {{ true ? 'yes' : 'nop' }}
+    input(v-model="name")
+    p {{ name }}
+    p
+      a(v-bind:href="url") Link
+    p
+      a(:href="url") Link
 </template>
 
 <script>
 export default {
   name: 'app',
+
   data () {
     return {
-      msg: 'Hola Vue',
-      person: {
-        name: 'Juan'
-      }
+      name: '',
+
+      url: 'https://platzi.com'
     }
   }
 }
