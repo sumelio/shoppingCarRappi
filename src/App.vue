@@ -1,5 +1,7 @@
 <template lang="pug">
   #app
+    rappi-header
+
     section.section
       nav.nav.has-shadow
         .container
@@ -17,20 +19,21 @@
         .columns
           .column(v-for="t in tracks")
             | {{ t.name }} - {{ t.artists[0].name }}
+
+    rappi-footer
 </template>
 
 <script>
 
-// import trackService from './services/track.js'
 import trackService from './services/tracks'
-// const tracks = [
-//   { name: 'Muchacha', artist: 'Luis ALbert' },
-//   { name: 'Hoy aca en el baile', artist: 'El Pepo' },
-//   { name: 'I was made for loving you', artist: 'Kiss' }
-// ]
+import RappiFooter from './components/layout/Footer.vue'
+import RappiHeader from './components/layout/Header.vue'
 
 export default {
   name: 'app',
+
+  components: { RappiFooter, RappiHeader },
+
   data () {
     return {
       searchQuery: '',
