@@ -6,24 +6,42 @@
       p(slot="body") No se encontraron resultados
 
     rappi-loader(v-show="isLoading")
-    section.section(v-show="!isLoading")
+    section.section
       nav.nav
         .container
-          input.input.is-short(
-            type="text", placeholder="Buscar algo"
-            v-model="searchQuery"
-            )
-          button.is-info.is-large(
-            @click="search"
-            ) Buscar
+          label.title(for="apiUrl" ) API URL
+          input.input.is-short(type="text", id="apiUrl" v-model="apiUrl")
+          br
+          table.table-api
+            tr
+              th tipo
+              th Url
+            tr
+              td Lacteos
+              td
+                | https://www.rappi.com/api-services/windu/sub_corridors/store/6660307/corridor/125772
+            tr
+              td Bebidas
+              td
+               | https://www.rappi.com/api-services/windu/sub_corridors/store/6660307/corridor/126222
+        br
+        .container
+        .search-input-container
+          input.input.search-input(
+              type="text", placeholder="Busca productos en la API de Rappi"
+              v-model="searchQuery"
+              )
+          span.search-reset
+          button.search-button.iconf-ico-buscar(
+              @click="search"
+              )
           p
             small {{ searchMessage }}
-          br
           br
       .productcontainer
        .product(v-for="p in products")
          rappi-product(
-               :class="{ 'is-active': p.id === selectedProduct  }.product",
+               :class="{ 'is-active': p.id === selectedProduct  }",
                :product="p", @select="setSelectedProduct" )
 
     rappi-footer
@@ -53,7 +71,8 @@ export default {
       isLoading: false,
       isShowNotification: false,
 
-      selectedProduct: ''
+      selectedProduct: '',
+      apiUrl: 'https://www.rappi.com/api-services/windu/sub_corridors/store/6660307/corridor/126222'
     }
   },
 
@@ -78,14 +97,16 @@ export default {
     search () {
       // console.log(this.searchQuery)
       // this.tracks = tracks
-      if (!this.searchQuery.length > 0) { return }
+      // if (!this.searchQuery.length > 0) { return }
 
-      this.isLoading = false
-
-      productService.search(this.searchQuery)
+      this.isLoading = true
+      console.log(this.apiUrl)
+      productService.search(this.searchQuery, this.apiUrl)
         .then(res => {
           console.log(res)
-          this.products = res.sub_corridors[0].products
+          if (res.sub_corridors && res.sub_corridors.length > 0) {
+            this.products = res.sub_corridors[0].products
+          }
           this.isLoading = false
         })
     },
@@ -99,8 +120,8 @@ export default {
 </script>
 
 <style lang="scss">
-  @import './scss/main.scss'
-;
+  @import './scss/main.scss';
+
   .results {
     margin-top: 50px;
   }
@@ -126,11 +147,72 @@ export default {
          height: 360px;
 
   }
+  .search-input-container{
+     width: 100%;
+     position: relative;
+     display: inline-block;
+     vertical-align: middle;
+     zoom: 1;
+    }
+  .search-input {
+        height: 41px;
+        padding: 10px 60px 10px 20px;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        width: 100%;
+        line-height: 40px;
+        background: #fff;
+        -webkit-border-radius: 4px;
+        -moz-border-radius: 4px;
+        border-radius: 4px;
+        font-size: 14px;
+    }
 
-  img {
-      height: auto;
-      width: 120%;
-  }
+    .search-button {
+        background: #FF7175;
+        color: #9faab7;
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 150px;
+        height: 40px;
+        -webkit-border-radius: 4px;
+        -moz-border-radius: 4px;
+        border-radius: 4px;
+        color: #fff;
+        font-size: 24px;
+        text-align: center;
+        border: 0;
+    }
 
+    @media only screen and (max-width: 992px){
+      .search-button {
+          width: 40px;
+          background-color: transparent;
+          color: #9faab7;
+      }
+    }
+    .iconf-ico-buscar:before {
+      content: "🔍";
+     }
 
+    .table-api{
+      width: 100%;
+      max-width: 800px;
+      margin-bottom: 20px;
+      // background-color: rgb(163, 213, 194 );
+      border-spacing: 2;
+      border-collapse: collapse;
+      border: 3px solid rgb(163, 213, 194 );
+      td, tr, th {
+        margin: 2px;
+        border: 3px solid rgb(163, 213, 194 );
+        padding: 10px;
+        background-color: white;
+      }
+    }
+    label.title {
+      color: rgb(163, 213, 194 );
+    }
 </style>

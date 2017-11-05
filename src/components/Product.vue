@@ -5,13 +5,18 @@
     img.item_data.img(:src="product.image | uppercase")
     p.title {{ product.name }}
     p.price $ {{ product.price }}
+    p.popularity Popularidad {{ product.popularity }}
 
     data.data
-      p {{ product.description }}
-      p.false-available :class="{ 'true-available': product.is_available === true  }
-       .is-available :v-show(product.is_available === true)
-    add.content
-      i.fa.fa-plus
+      p.label {{ product.description | extractDescription }}
+      p Precio real $ {{ product.real_balance_price }}
+      p(:class="{ 'active-show': !product.have_discount }").true-available Tiene descuento
+      p(:class="{ 'active-show': product.have_discount }").false-available Sin descuento
+      p(:class="{ 'active-show': !product.is_available }").true-available Disponible
+      p(:class="{ 'active-show': product.is_available }").false-available No disponible
+      p Cantidad {{ product.quantity }}
+    .add.content
+      i.fa.fa-plus(@click="selectProduct")
 </template>
 
 <script>
@@ -21,15 +26,20 @@
     },
 
     methods: {
-      selectTrack () {
+      selectProduct () {
         this.$emit('select', this.product.id)
       }
     },
 
     filters: {
-      uppercase: function (str) {
+      uppercase (str) {
         // return str + ' things'
         return 'https://img.rappi.com/products/low/' + str
+      },
+
+      extractDescription  (str) {
+        // return str + ' things'
+        return str.split('.')[0]
       }
     }
   }
@@ -46,12 +56,16 @@
       position: relative;
       img {
         position: relative;
-        top: -50px;
+        top: -30px;
         left: 10px;
         max-height: 150px;
         width: 200%;
         margin: -5px -12px ;
         padding: 0px;
+        transition: top 1.5s ease-in-out;
+        &:hover {
+          transform: scale(1.05);
+        }
        }
       i {
         z-index: 10001;
@@ -64,7 +78,7 @@
         line-height: 50px;
         font-size: 1.4rem;
         position: absolute;
-        right: -30px;
+        right: -40px;
         top: 150px;
         box-shadow: 0 0 4px 2px rgba(80, 80, 80, 0.1);
         cursor: pointer;
@@ -77,6 +91,13 @@
       h2 {
         margin-left: 20px;
       }
+
+
+      .data{
+          z-index: 10000;
+          height: 220px;
+          width: 100%;
+       }
       p.title {
         position: absolute;
         top: 100px;
@@ -86,22 +107,29 @@
       }
       p.price {
         position: absolute;
-        top: 200px;
+        top: 210px;
         margin-left: 0px;
-        font-size: 25px;
+        font-size: 30px;
+        padding: 10px;
+      }
+
+
+      p.popularity {
+        position: absolute;
+        top: 248px;
+        margin-left: 0px;
+        font-size: 20px;
         padding: 10px;
       }
       &:hover{
                 .data{
                     bottom:0;
-                    position: absolute;
                     z-index: 10000;
-                    height: 160px;
+                    height: 220px;
                     width: 100%;
-                    font-weight: bold;
-                    font-size: 20px;
-                    color: black;
-
+                }
+                img {
+                  top: -70px;
                 }
             }
       .data {
@@ -112,20 +140,27 @@
           width: 100%;
           left: 0;
           padding: 20px 15px 0px 0px;
-          color:#FFF;
-          background:rgba(163, 213, 194, 0.90);
+          background:rgba(163, 213, 194, 0.92);
           transition: bottom 0.5s ease-in-out;
           margin-bottom: 0;
-          padding: 10px;
+          padding: 5px;
+          font-weight: bold;
+          font-size: 20px;
+          color: black;
+          border: 2px solid #73BEA2;
+
           h1{
               font-size:22px;
               font-weight:300;
           }
           p{
               font-size:14px;
-              padding: 10px;
-
+              padding: 5px 10px 2px 10px;
           }
+          p.label {
+            font-size:18px;
+          }
+
       }
 
     }
@@ -141,6 +176,17 @@
 
     .fa-plus:before {
        content: '➕';
+     }
+
+     .true-available{
+       color: green;
+     }
+
+     .false-available{
+       color: red;
+     }
+     .active-show{
+       display: none;
      }
 
 </style>

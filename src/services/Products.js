@@ -2,10 +2,9 @@ import rappiProductService from './rappi-client-api-rest'
 
 const productService = {}
 
-productService.search = function (q) {
+productService.search = function (q, apiUrl) {
   const type = 'track'
-
-  return rappiProductService.get('', {
+  return rappiProductService.get(apiUrl, {
     params: {q, type}
   })
     .then(res => res.data)
