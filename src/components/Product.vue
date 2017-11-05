@@ -1,24 +1,12 @@
 <template lang="pug">
-  .card
-    .card-image
-      figure.image.is-1by1
-        img(:src="product.album.images[0].url")
+  .box
+    img.item_data.img(:src="product.image | uppercase")
 
-    .card-content
-      .media
-        .medi-left
-          figure.image.is-48x48
-            img(:src="product.album.images[0].url")
-        .media-content
-          p.title.is-6
+    p.title.is-6
             strong {{ product.name }}
-          p.subtitle.is-6 {{ product.artists[0].name }}
+    p.subtitle.is-6 {{ product.description }}
       .content
-        small {{ product.duration_ms}}
-          nav.level
-            .level-left
-              a.level-item
-                span.icon.is-small(@click="selectTrack") 🎧
+        i.fa.fa-plus
 </template>
 
 <script>
@@ -31,10 +19,71 @@
       selectTrack () {
         this.$emit('select', this.product.id)
       }
+    },
+
+    filters: {
+      uppercase: function (str) {
+        // return str + ' things'
+        return 'https://img.rappi.com/products/low/' + str
+      }
     }
   }
 </script>
 
-<style>
+<style lang="scss" scoped>
+.box {
+      width: 230px;
+      height: 300px;
+      background-color: #fff;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+      display: inline-block;
+      margin: 0 5px;
+      position: relative;
+      img {
+        height: auto;
+        max-width: 100%;
+        margin-bottom: 60px;
+        padding: 6px;
+       }
+      i {
+        width: 50px;
+        height: 50px;
+        background: #F24E4E;
+        color: #ffffff;
+        border-radius: 25px;
+        text-align: center;
+        line-height: 50px;
+        font-size: 1.4rem;
+        position: absolute;
+        right: -7px;
+        top: 120px;
+        box-shadow: 0 0 4px 2px rgba(80, 80, 80, 0.1);
+        cursor: pointer;
+        transition: all 0.3s;
+        transition: all 0.3s;
+        &:hover {
+          transform: scale(1.05);
+        }
+      }
+      h2 {
+        margin-left: 20px;
+      }
+      p {
+        margin-left: 20px;
+      }
+    }
+
+    .fa {
+        display: inline-block;
+        font: normal normal normal 14px/1 FontAwesome;
+        font-size: inherit;
+        text-rendering: auto;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    .fa-plus:before {
+       content: '➕';
+     }
 
 </style>

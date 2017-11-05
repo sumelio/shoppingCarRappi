@@ -148,3 +148,19 @@ https://atom.io/packages/language-pug
 ```bash
 $ apm install language-pug
 ```
+
+
+https://www.rappi.com/api-services/windu/products/store/99900037/sub_corridor/441301
+https://www.rappi.com/api-services/windu/sub_corridors/store/99900037/corridor/77135
+
+https://www.rappi.com/api-services/windu/products/store/99900037/sub_corridor/77135
+https://www.rappi.com/api-services/windu/sub_corridors/store/99900037/corridor/77135
+
+
+https://www.rappi.com/api-services/windu/sub_corridors/store/6660307/corridor/125827
+
+https://www.rappi.com/api-services/windu/sub_corridors/store/6660307/corridor/125827
+https://img.rappi.com/products/low/510872.png
+
+
+https://www.rappi.com/api-services/windu/sub_corridors/store/6660307/corridor/125772

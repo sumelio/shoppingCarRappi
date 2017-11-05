@@ -1,8 +1,8 @@
 {
-  "name": "shoppin-car-rappi",
-  "description": "Shopping car Rapii",
+  "name": "Fake-shopping-car-rappi",
+  "description": "Fake Shopping car Rapii",
   "version": "1.0.0",
-  "author": "falemusb@correo.udistrital.edu.co",
+  "author": "sumel124@gmail.com",
   "private": true,
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack-dev-server --open --hot",

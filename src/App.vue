@@ -19,19 +19,18 @@
           a.button.is-danger.is-large &times;
           p
             small {{ searchMessage }}
-      .container.results
-        .columns.is-multiline
-          .column.is-one-quarter(v-for="t in tracks")
-            rappi-product(
-              :class="{ 'is-active': t.id === selectedProduct  }",
-              :product="t", @select="setSelectedProduct" )
+      .productcontainer
+       .product(v-for="p in products")
+         rappi-product(
+               :class="{ 'is-active': p.id === selectedProduct  }.product",
+               :product="p", @select="setSelectedProduct" )
 
     rappi-footer
 </template>
 
 <script>
 
-import trackService from '@/services/tracks'
+import productService from '@/services/Products'
 
 import RappiFooter from '@/components/layout/Footer.vue'
 import RappiHeader from '@/components/layout/Header.vue'
@@ -49,7 +48,7 @@ export default {
   data () {
     return {
       searchQuery: '',
-      tracks: [],
+      products: [],
       isLoading: false,
       isShowNotification: false,
 
@@ -59,7 +58,7 @@ export default {
 
   computed: {
     searchMessage () {
-      return `Encontrados: ${this.tracks.length}`
+      return `Encontrados: ${this.products.length}`
     }
   },
 
@@ -82,11 +81,10 @@ export default {
 
       this.isLoading = false
 
-      trackService.search(this.searchQuery)
+      productService.search(this.searchQuery)
         .then(res => {
           console.log(res)
-          this.isShowNotification = res.tracks.total === 0
-          this.tracks = res.tracks.items
+          this.products = res.sub_corridors[0].products
           this.isLoading = false
         })
     },
@@ -109,4 +107,21 @@ export default {
   .is-active {
     border: 3px #23d160 solid;
   }
+
+  html, body {
+    background-color: #eee;
+    font-family: calibri, sans-serif;
+  }
+
+  .productcontainer {
+          width: 100%;
+          display: flex;
+          flex-wrap: wrap;
+  }
+
+  .product {
+        width: 240px;
+  }
+
+
 </style>
