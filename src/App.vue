@@ -147,6 +147,26 @@ export default {
          height: 360px;
 
   }
+  @media only screen and (max-width: 700px){
+    .product {
+      width: 80%;
+      height: 360px;
+    }
+    .section{
+      padding: 0;
+    }
+  }
+
+  @media only screen and (max-width: 500px){
+    .product {
+      width: 100%;
+      height: 360px;
+    }
+    .section{
+      padding: 0;
+    }
+  }
+
   .search-input-container{
      width: 100%;
      position: relative;

@@ -8,13 +8,13 @@
     p.popularity Popularidad {{ product.popularity }}
 
     data.data
-      p.label {{ product.description | extractDescription }}
-      p Precio real $ {{ product.real_balance_price }}
-      p(:class="{ 'active-show': !product.have_discount }").true-available Tiene descuento
-      p(:class="{ 'active-show': product.have_discount }").false-available Sin descuento
-      p(:class="{ 'active-show': !product.is_available }").true-available Disponible
-      p(:class="{ 'active-show': product.is_available }").false-available No disponible
-      p Cantidad {{ product.quantity }}
+      p.description {{ product.description | extractDescription }}
+      p.realprice Precio real $ {{ product.real_balance_price }}
+      p.discount(:class="{ 'active-show': !product.have_discount }").true-available Tiene descuento
+      p.discount(:class="{ 'active-show': product.have_discount }").false-available Sin descuento
+      p.availabel(:class="{ 'active-show': !product.is_available }").true-available Disponible
+      p.availabel(:class="{ 'active-show': product.is_available }").false-available No disponible
+      p.quantity Cantidad {{ product.quantity }}
     .add.content
       i.fa.fa-plus(@click="selectProduct")
 </template>
@@ -91,13 +91,6 @@
       h2 {
         margin-left: 20px;
       }
-
-
-      .data{
-          z-index: 10000;
-          height: 220px;
-          width: 100%;
-       }
       p.title {
         position: absolute;
         top: 100px;
@@ -112,8 +105,6 @@
         font-size: 30px;
         padding: 10px;
       }
-
-
       p.popularity {
         position: absolute;
         top: 248px;
@@ -148,22 +139,110 @@
           font-size: 20px;
           color: black;
           border: 2px solid #73BEA2;
-
-          h1{
-              font-size:22px;
-              font-weight:300;
-          }
-          p{
+          border-top: 0;
+          p.realprice, .availabel, .quantity, .discount {
               font-size:14px;
-              padding: 5px 10px 2px 10px;
+               padding: 5px 10px 2px 10px;
           }
-          p.label {
+          p.description {
             font-size:18px;
+            padding: 15px 10px 2px 10px;
           }
 
       }
 
     }
+
+    @media only screen and (max-width: 500px){
+      .box {
+        width: 100%;
+        height: 300px;
+        i {
+          right: 10px;
+          top: 80%;
+          width: 100px;
+        }
+      }
+    }
+
+
+    @media only screen and (max-width: 700px){
+      .box {
+        width: 100%;
+        height: 200px;
+        img {
+          width: auto;
+          height: 100%;
+        }
+
+        i {
+          right: 10px;
+          top: 90%;
+          width: 100px;
+        }
+        p.title {
+          position: absolute;
+          top: 10px;
+          left: 200px;
+          margin-left: 0px;
+          font-size: 18px;
+          padding: 10px 5px 10px 40px;
+        }
+        p.price {
+          position: absolute;
+          top: 80px;
+          left: 200px;
+          margin-left: 0px;
+          font-size: 30px;
+          padding: 10px 5px 10px 40px;
+        }
+        p.popularity {
+          position: absolute;
+          top: 130px;
+          left: 200px;
+          margin-left: 0px;
+          font-size: 20px;
+          padding: 10px 5px 10px 40px;
+        }
+
+        &:hover{
+                  .data{
+                      bottom:0;
+                      z-index: 10000;
+                      height: 220px;
+                  }
+                  h1{
+                      font-size:22px;
+                      font-weight:300;
+                  }
+                  p{
+                      font-size:14px;
+                      padding: 5px 10px 2px 10px;
+                  }
+                  p.label {
+                    font-size:18px;
+                  }
+
+              }
+
+        .data {
+            left: 180px;
+            top: 0px;
+            border: 2px solid red;
+            p.realprice, .availabel, .quantity, .discount {
+                font-size:14px;
+                 padding: 5px 10px 2px 10px;
+            }
+            p.description {
+              font-size:18px;
+            }
+
+
+         }
+
+      }
+    }
+
 
     .fa {
         display: inline-block;
