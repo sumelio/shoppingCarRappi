@@ -42,13 +42,13 @@
       background-color: #fff;
       box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
       display: inline-block;
-      margin: 0 5px;
+      margin: 10px 5px;
       position: relative;
       img {
         position: relative;
-        top: -35px;
-        left: -15px;
-        max-height: 160px;
+        top: -50px;
+        left: 10px;
+        max-height: 150px;
         width: 200%;
         margin: -5px -12px ;
         padding: 0px;
@@ -81,14 +81,14 @@
         position: absolute;
         top: 100px;
         margin-left: 0px;
-        font-size: 20px;
+        font-size: 18px;
         padding: 40px 40px 10px 0;
       }
       p.price {
         position: absolute;
-        top: 220px;
+        top: 200px;
         margin-left: 0px;
-        font-size: 30px;
+        font-size: 25px;
         padding: 10px;
       }
       &:hover{
@@ -96,11 +96,11 @@
                     bottom:0;
                     position: absolute;
                     z-index: 10000;
-                    height: 190px;
-                    width: 190px;
+                    height: 160px;
+                    width: 100%;
                     font-weight: bold;
-                    font-size: 40px;
-                    color: white;
+                    font-size: 20px;
+                    color: black;
 
                 }
             }
@@ -113,7 +113,7 @@
           left: 0;
           padding: 20px 15px 0px 0px;
           color:#FFF;
-          background:rgba(255, 83, 91, 0.90);
+          background:rgba(163, 213, 194, 0.90);
           transition: bottom 0.5s ease-in-out;
           margin-bottom: 0;
           padding: 10px;

@@ -129,6 +129,7 @@ export default {
 
   img {
       height: auto;
+      width: 120%;
   }
 
 
