@@ -8,17 +8,18 @@
     rappi-loader(v-show="isLoading")
     section.section(v-show="!isLoading")
       nav.nav
-        .container.has-shadow
-          input.input.is-large(
+        .container
+          input.input.is-short(
             type="text", placeholder="Buscar algo"
             v-model="searchQuery"
             )
-          a.button.is-info.is-large(
+          button.is-info.is-large(
             @click="search"
             ) Buscar
-          a.button.is-danger.is-large &times;
           p
             small {{ searchMessage }}
+          br
+          br
       .productcontainer
        .product(v-for="p in products")
          rappi-product(
@@ -117,10 +118,17 @@ export default {
           width: 100%;
           display: flex;
           flex-wrap: wrap;
+          justify-content: space-evenly;
   }
 
   .product {
-        width: 240px;
+        width: 290px;
+         height: 360px;
+
+  }
+
+  img {
+      height: auto;
   }
 
 

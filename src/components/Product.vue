@@ -1,12 +1,17 @@
 <template lang="pug">
   .box
-    img.item_data.img(:src="product.image | uppercase")
 
-    p.title.is-6
-            strong {{ product.name }}
-    p.subtitle.is-6 {{ product.description }}
-      .content
-        i.fa.fa-plus
+
+    img.item_data.img(:src="product.image | uppercase")
+    p.title {{ product.name }}
+    p.price $ {{ product.price }}
+
+    data.data
+      p {{ product.description }}
+      p.false-available :class="{ 'true-available': product.is_available === true  }
+       .is-available :v-show(product.is_available === true)
+    add.content
+      i.fa.fa-plus
 </template>
 
 <script>
@@ -32,7 +37,7 @@
 
 <style lang="scss" scoped>
 .box {
-      width: 230px;
+      width: 250px;
       height: 300px;
       background-color: #fff;
       box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
@@ -40,12 +45,16 @@
       margin: 0 5px;
       position: relative;
       img {
-        height: auto;
-        max-width: 100%;
-        margin-bottom: 60px;
-        padding: 6px;
+        position: relative;
+        top: -35px;
+        left: -15px;
+        max-height: 160px;
+        width: 200%;
+        margin: -5px -12px ;
+        padding: 0px;
        }
       i {
+        z-index: 10001;
         width: 50px;
         height: 50px;
         background: #F24E4E;
@@ -55,8 +64,8 @@
         line-height: 50px;
         font-size: 1.4rem;
         position: absolute;
-        right: -7px;
-        top: 120px;
+        right: -30px;
+        top: 150px;
         box-shadow: 0 0 4px 2px rgba(80, 80, 80, 0.1);
         cursor: pointer;
         transition: all 0.3s;
@@ -68,9 +77,57 @@
       h2 {
         margin-left: 20px;
       }
-      p {
-        margin-left: 20px;
+      p.title {
+        position: absolute;
+        top: 100px;
+        margin-left: 0px;
+        font-size: 20px;
+        padding: 40px 40px 10px 0;
       }
+      p.price {
+        position: absolute;
+        top: 220px;
+        margin-left: 0px;
+        font-size: 30px;
+        padding: 10px;
+      }
+      &:hover{
+                .data{
+                    bottom:0;
+                    position: absolute;
+                    z-index: 10000;
+                    height: 190px;
+                    width: 190px;
+                    font-weight: bold;
+                    font-size: 40px;
+                    color: white;
+
+                }
+            }
+      .data {
+          z-index: -1;
+          position: absolute;
+          bottom: -20px;
+          height: 0;
+          width: 100%;
+          left: 0;
+          padding: 20px 15px 0px 0px;
+          color:#FFF;
+          background:rgba(255, 83, 91, 0.90);
+          transition: bottom 0.5s ease-in-out;
+          margin-bottom: 0;
+          padding: 10px;
+          h1{
+              font-size:22px;
+              font-weight:300;
+          }
+          p{
+              font-size:14px;
+              padding: 10px;
+
+          }
+      }
+
     }
 
     .fa {
