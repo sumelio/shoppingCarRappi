@@ -9,7 +9,7 @@
     section.section
       nav.nav
         .container
-          label.title(for="apiUrl" ) Rappi API URL
+          label.title(for="apiUrl" ) Fake desde Rappi API URL
           input.input.is-short(type="text", id="apiUrl" v-model="apiUrl")
           br
           table.table-api
@@ -137,6 +137,7 @@ export default {
   .productClass {
     border: 2px solid;
     border-radius: 25px;
+
   }
 
   html, body {
@@ -155,7 +156,7 @@ export default {
         width: 290px;
          height: 360px;
 
-
+     // border: 2px solid blue;
   }
   @media only screen and (max-width: 700px){
     .product {
@@ -247,6 +248,6 @@ export default {
     color: white;
     display: block;
     padding: 10px;
-    //border: 2px solid red;
+
    }
 </style>

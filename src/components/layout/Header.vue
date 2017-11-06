@@ -5,6 +5,6 @@
          .container
            .nav-left
              .nav-item
-               strong Rappi
-           .nav-right.nav-menu   
+               strong Rappidier
+           .nav-right.nav-menu
 </template>
