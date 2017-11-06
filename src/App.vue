@@ -3,13 +3,13 @@
     rappi-header
 
     rappi-notification(v-show="isShowNotification")
-      p(slot="body") No se encontraron resultados
+      p(slot="body") No se encontrarón resultados
 
     rappi-loader(v-show="isLoading")
     section.section
       nav.nav
         .container
-          label.title(for="apiUrl" ) API URL
+          label.title(for="apiUrl" ) Rappi API URL
           input.input.is-short(type="text", id="apiUrl" v-model="apiUrl")
           br
           table.table-api
@@ -35,8 +35,6 @@
           button.search-button.iconf-ico-buscar(
               @click="search"
               )
-          p
-            small {{ searchMessage }}
           br
       .productcontainer
        .product(v-for="p in products")
@@ -149,23 +147,15 @@ export default {
   }
   @media only screen and (max-width: 700px){
     .product {
-      width: 80%;
-      height: 360px;
+      width: 300px;
+      height: 330px;
     }
     .section{
       padding: 0;
     }
   }
 
-  @media only screen and (max-width: 500px){
-    .product {
-      width: 100%;
-      height: 360px;
-    }
-    .section{
-      padding: 0;
-    }
-  }
+
 
   .search-input-container{
      width: 100%;
