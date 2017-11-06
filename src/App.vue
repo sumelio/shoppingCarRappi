@@ -36,6 +36,8 @@
               @click="search"
               )
           br
+          br
+          br
       .productcontainer
        .product(v-for="p in products")
          rappi-product(
@@ -125,11 +127,12 @@ export default {
   }
 
   .is-active {
-    border: 3px #23d160 solid;
+    //border: 3px #23d160 solid;
+    box-shadow: 0 2px 3px rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.1);
   }
 
   html, body {
-    background-color: #eee;
+    //background-color: #eee;
     font-family: calibri, sans-serif;
   }
 
@@ -225,4 +228,16 @@ export default {
     label.title {
       color: rgb(163, 213, 194 );
     }
+
+
+    .box {
+    background-color: white;
+    border-radius: 0px;
+    /* box-shadow: 0 2px 3px rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.1); */
+    box-shadow:  0 0px 0px rgba(0, 0, 0, 0.0), 0 0 0 0px rgba(0, 0, 0, 0.0);
+    color: white;
+    display: block;
+    padding: 10px;
+    border: 2px solid red;
+   }
 </style>

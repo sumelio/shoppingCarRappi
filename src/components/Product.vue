@@ -1,23 +1,20 @@
 <template lang="pug">
-  .box
+.box
+  .image
+    p.title {{ product.name }}
+    img.item_data.img(:src="product.image | uppercase")
+    p.price $ {{ product.price }}
+    .add.content
+      i.addProduct.fa.fa-plus(@click="selectProduct")
+        .detail
+        .info
 
-
-    .image
-
-      img.item_data.img(:src="product.image | uppercase")
-      .add.content
-        i.addProduct.fa.fa-plus(@click="selectProduct")
-      .detail
-      p.title {{ product.name }}
-      p.description {{ product.description | extractDescription }}
-      p.discount.true-available {{ product.have_discount ? 'Con' : 'Sin' }} descuento
-      p.discount.true-available {{ product.is_available ? 'D' : 'No d' }}isponible
-      p.quantity Cantidad {{ product.quantity }}
-      p.price $ {{ product.price }}
-      p.popularity Popularidad {{ product.popularity }}
-
-
-
+          p.description {{ product.description | extractDescription }}
+          p.discount.true-available {{ product.have_discount ? 'Con' : 'Sin' }} descuento
+          p.discount.true-available {{ product.is_available ? 'D' : 'No d' }}isponible
+          p.quantity Cantidad {{ product.quantity }}
+          p.price $ {{ product.price }}
+          p.popularity Popularidad {{ product.popularity }}
 </template>
 
 <script>
@@ -46,13 +43,13 @@
   }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss" scoped >
 .box {
   width: 250px;
   height: 300px;
-  background-color: #fff;
-  display: inline-block;
-  margin: 10px 5px;
+  // background-color: #fff;
+  // display: inline-block;
+  //margin: 10px 5px;
   position: relative;
 
   i.addProduct {
@@ -74,75 +71,78 @@
     transition: all 0.3s;
     &:hover {
       transform: scale(1.15);
-    }
+    } //  &:hover {
   }
 
   .image {
-   position: absolute;
-    img {
-      top: -40px;
-      left: 5px;
-      max-height: 150px;
-      width: 200%;
-      margin: -5px -12px;
-      padding: 0px;
-      transition: top 2.5s ease-in-out;
+    p.title {
+      font-size: 18px;
+      padding: 5px 1px 0;
+      color: gray;
+      width: 220px;
     }
 
-    p {
-      &.title {
-        font-size: 18px;
-        padding: 5px 1px 0;
-        color: gray;
-        width: 220px;
-      }
-      &.description {
-        font-size: 18px;
-        padding: 1px 2px;
-        width: 220px;
-        display: none;
-      }
-
-      &.availabel, &.discount, &.quantity {
-       display: none;
-       bottom: 0;
-      }
-
-      &.quantity {
-       color: gray;
-      }
-
-      &.price {
-        margin-left: 0px;
-        font-size: 25px;
-        padding: 1px;
-      }
-
-      &.popularity {
-        margin-left: 0px;
-        font-size: 20px;
-        padding: 1px;
-        display: none;
-      }
-    } // end p
-
-
-    .detail{
-      position: absolute;
-      height: 0px;
-      bottom: 0;
-      top: 50px;
-      left: -15px;
-      width: 240px;
-      background:rgba(163, 213, 194, 0.85);
-      // transition: bottom 0.5s ease-in-out;
+    img {
+      max-height: 200px;
+      width: auto;
+      margin: -5px -12px;
+      padding: 30px 0 0 0 ;
       transition: top 2.5s ease-in-out;
+    } // img
+    .info {
+     position: absolute;
+      p {
+
+        &.description {
+          font-size: 18px;
+          padding: 1px 2px;
+          width: 220px;
+          display: none;
+        }
+
+        &.availabel, &.discount, &.quantity {
+         display: none;
+         bottom: 0;
+        }
+
+        &.quantity {
+         color: gray;
+        }
+
+        &.price {
+          margin-left: 0px;
+          font-size: 25px;
+          padding: 1px;
+        }
+
+        &.popularity {
+          margin-left: 0px;
+          font-size: 20px;
+          padding: 1px;
+          display: none;
+        }
+      } // end p
+    } // p.info
+
+    .detail {
+      position: absolute;
+      height: 300px;
+      left: -210px;
+      width: 230px;
       box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
       border-radius: 15px;
+      top: -177px;
+      padding: 20px 15px 0px 0px;
+      background:rgba(163, 213, 194, 0.00);
+      transition:  0.5s ease-in-out;
+      margin-bottom: 0;
+      //font-weight: bold;
+      font-size: 20px;
+      color: black;
     }
 
 
-   &:hover {
+   i:hover {
     //transform: scale(1.05);
 
     img {
@@ -150,30 +150,40 @@
        top: -80px;
      }
 
-     .detail{
-       height: 270px;
-       bottom: 120px;
-       top: 50px;
-       left: -15px;
-
+     .detail {
+        top: -177px;
+        left: -200px;
+        height: 250px;
+        width: 220px;
+        color: red;
+        background:rgba(163, 213, 194, 0.82);
      }
 
+     .info {
+     position: absolute;
+     top: -100px;
+     left: -220px;
+     height: 220px;
+     width: 220px;
+
      p {
+
        &.title {
          padding: 60px 1px 0 0;
+         color: red;
        }
        &.description {
+         top: 50px;
          font-size: 18px;
          padding: 10px 2px 0px 10px;
          width: 220px;
          display: block;
+
        }
 
        &.realprice, &.availabel, &.quantity, &.discount {
          display: block;
          padding: 0 0 0 10px;
-
-         z-index: 20;
        }
 
        &.price {
@@ -189,7 +199,7 @@
          display: none;
        }
      } // end p
-
+   }
 
 
   }
