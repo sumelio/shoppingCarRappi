@@ -3,20 +3,21 @@
 
 
     .image
-      .detail
+
       img.item_data.img(:src="product.image | uppercase")
       .add.content
         i.addProduct.fa.fa-plus(@click="selectProduct")
-
+      .detail
       p.title {{ product.name }}
       p.description {{ product.description | extractDescription }}
-      p.discount(:class="{ 'active-show': !product.have_discount }").true-available Tiene descuento
-      p.discount(:class="{ 'active-show': product.have_discount }").false-available Sin descuento
-      p.availabel(:class="{ 'active-show': !product.is_available }").true-available Disponible
-      p.availabel(:class="{ 'active-show': product.is_available }").false-available No disponible
-      p.price $ {{ product.price }}
+      p.discount.true-available {{ product.have_discount ? 'Con' : 'Sin' }} descuento
+      p.discount.true-available {{ product.is_available ? 'D' : 'No d' }}isponible
       p.quantity Cantidad {{ product.quantity }}
+      p.price $ {{ product.price }}
       p.popularity Popularidad {{ product.popularity }}
+
+
+
 </template>
 
 <script>
@@ -53,9 +54,6 @@
   display: inline-block;
   margin: 10px 5px;
   position: relative;
-  &:hover {
-    box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
-  }
 
   i.addProduct {
     z-index: 10001;
@@ -78,23 +76,17 @@
       transform: scale(1.15);
     }
   }
-  .detail{
-    display: none;
-    &:hover {
-      display: block;
-      border: 2px solid red;
-    }
-  }
+
   .image {
    position: absolute;
     img {
-      top: -30px;
-      left: 10px;
+      top: -40px;
+      left: 5px;
       max-height: 150px;
       width: 200%;
       margin: -5px -12px;
       padding: 0px;
-      transition: top 1.5s ease-in-out;
+      transition: top 2.5s ease-in-out;
     }
 
     p {
@@ -134,29 +126,54 @@
       }
     } // end p
 
-   &:hover {
-      transform: scale(1.05);
 
-     img {
+    .detail{
+      position: absolute;
+      height: 0px;
+      bottom: 0;
+      top: 50px;
+      left: -15px;
+      width: 240px;
+      background:rgba(163, 213, 194, 0.85);
+      // transition: bottom 0.5s ease-in-out;
+      transition: top 2.5s ease-in-out;
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+      border-radius: 15px;
+    }
+
+
+   &:hover {
+    //transform: scale(1.05);
+
+    img {
        position: absolute;
-       transform: scale(1.05);
-       top: -100px;
+       top: -80px;
+     }
+
+     .detail{
+       height: 270px;
+       bottom: 120px;
+       top: 50px;
+       left: -15px;
+
      }
 
      p {
        &.title {
          padding: 60px 1px 0 0;
-         display: none;
        }
        &.description {
          font-size: 18px;
-         padding: 30px 2px 0px 0px;
+         padding: 10px 2px 0px 10px;
          width: 220px;
          display: block;
        }
 
        &.realprice, &.availabel, &.quantity, &.discount {
          display: block;
+         padding: 0 0 0 10px;
+
+         z-index: 20;
        }
 
        &.price {
@@ -173,24 +190,12 @@
        }
      } // end p
 
+
+
   }
 
  }
 }
-
-@media only screen and (max-width: 970px) {
-  .box {
-    width: 300px;
-    height: 320px;
-
-    i.addProduct {
-      position: absolute;
-      right: -60px;
-      top: 70px;
-    }
-  }
-}
-
 
 
 .fa {
@@ -217,6 +222,6 @@
 .active-show {
   display: none;
   bottom: 0;
-  color: white;
+  color: rgba(163, 213, 194, 0.85);
 }
 </style>
