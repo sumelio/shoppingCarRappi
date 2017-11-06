@@ -127,8 +127,16 @@ export default {
   }
 
   .is-active {
-    //border: 3px #23d160 solid;
-    box-shadow: 0 2px 3px rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.1);
+
+    border-top: 6px #23d160 solid;
+    border-radius: 25px;
+    box-shadow: 0 20px 30px rgba(230, 0, 38, 0.10), 0 0 0 1px rgba(230, 0, 38, 0.10);
+
+
+  }
+  .productClass {
+    border: 2px solid;
+    border-radius: 25px;
   }
 
   html, body {
@@ -146,6 +154,7 @@ export default {
   .product {
         width: 290px;
          height: 360px;
+
 
   }
   @media only screen and (max-width: 700px){
@@ -238,6 +247,6 @@ export default {
     color: white;
     display: block;
     padding: 10px;
-    border: 2px solid red;
+    //border: 2px solid red;
    }
 </style>

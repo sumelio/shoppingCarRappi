@@ -2,19 +2,19 @@
 .box
   .image
     p.title {{ product.name }}
-    img.item_data.img(:src="product.image | uppercase")
     p.price $ {{ product.price }}
+    img.item_data.img(:src="product.image | uppercase")
     .add.content
       i.addProduct.fa.fa-plus(@click="selectProduct")
         .detail
         .info
-
-          p.description {{ product.description | extractDescription }}
-          p.discount.true-available {{ product.have_discount ? 'Con' : 'Sin' }} descuento
-          p.discount.true-available {{ product.is_available ? 'D' : 'No d' }}isponible
-          p.quantity Cantidad {{ product.quantity }}
-          p.price $ {{ product.price }}
-          p.popularity Popularidad {{ product.popularity }}
+          ul
+            li {{ product.description | extractDescription }}
+            li {{ product.have_discount ? 'Con' : 'Sin' }} descuento
+            li {{ product.is_available ? 'D' : 'No d' }}isponible
+            li Cantidad {{ product.quantity }}
+            li Popularidad {{ product.popularity }}
+            li $ {{ product.price }}
 </template>
 
 <script>
@@ -45,12 +45,9 @@
 
 <style lang="scss" scoped >
 .box {
+  position: relative;
   width: 250px;
   height: 300px;
-  // background-color: #fff;
-  // display: inline-block;
-  //margin: 10px 5px;
-  position: relative;
 
   i.addProduct {
     z-index: 10001;
@@ -68,31 +65,44 @@
     box-shadow: 0 0 4px 2px rgba(80, 80, 80, 0.1);
     cursor: pointer;
     transition: all 0.3s;
-    transition: all 0.3s;
     &:hover {
       transform: scale(1.15);
-    } //  &:hover {
-  }
+    } //  &:hover
+  } // i.addProduct
 
   .image {
     p.title {
       font-size: 18px;
-      padding: 5px 1px 0;
+      padding: 10px;
       color: gray;
-      width: 220px;
+      // width: 220px;
+    }
+
+    p.price {
+      margin-left: 0px;
+      font-size: 25px;
+      padding: 5px;
+      color: black;
     }
 
     img {
-      max-height: 200px;
+      max-height: 350px;
       width: auto;
-      margin: -5px -12px;
-      padding: 30px 0 0 0 ;
-      transition: top 2.5s ease-in-out;
+      top: 0;
+      //margin: -5px -12px;
+      padding: 10px;
+      transition: all 1.5s ease-in-out;
+      //transition: all 2.3s;
     } // img
+
     .info {
      position: absolute;
-      p {
+     ul li {
 
+
+       display: none;
+     }
+      span {
         &.description {
           font-size: 18px;
           padding: 1px 2px;
@@ -100,26 +110,9 @@
           display: none;
         }
 
-        &.availabel, &.discount, &.quantity {
+        &.availabel, &.discount, &.quantity, &.popularity {
          display: none;
          bottom: 0;
-        }
-
-        &.quantity {
-         color: gray;
-        }
-
-        &.price {
-          margin-left: 0px;
-          font-size: 25px;
-          padding: 1px;
-        }
-
-        &.popularity {
-          margin-left: 0px;
-          font-size: 20px;
-          padding: 1px;
-          display: none;
         }
       } // end p
     } // p.info
@@ -127,13 +120,13 @@
     .detail {
       position: absolute;
       height: 300px;
-      left: -210px;
-      width: 230px;
-      box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+      left: -225px;
+      width: 245px;
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
       border-radius: 15px;
-      top: -177px;
+      top: -164px;
       padding: 20px 15px 0px 0px;
-      background:rgba(163, 213, 194, 0.00);
+      background:rgba(163, 213, 194, 0.09);
       transition:  0.5s ease-in-out;
       margin-bottom: 0;
       //font-weight: bold;
@@ -142,69 +135,103 @@
     }
 
 
-   i:hover {
+   &:hover {
     //transform: scale(1.05);
-
-    img {
-       position: absolute;
-       top: -80px;
-     }
-
      .detail {
-        top: -177px;
-        left: -200px;
-        height: 250px;
-        width: 220px;
+        top: -220px;
+        left: -217px;
+        height: 520px;
+        width: 260px;
         color: red;
         background:rgba(163, 213, 194, 0.82);
+
+
+
      }
 
      .info {
-     position: absolute;
-     top: -100px;
-     left: -220px;
-     height: 220px;
-     width: 220px;
+    // position: absolute;
+       top: 10px;
+       left: -230px;
+       height: 240px;
+       width: 270px;
+       padding: 40px, 0, 0 ,0;
 
-     p {
-
-       &.title {
-         padding: 60px 1px 0 0;
-         color: red;
-       }
-       &.description {
-         top: 50px;
+       ul{
+        li {
+display: list-item;
+           line-height: 30px;
+         color: black;
          font-size: 18px;
-         padding: 10px 2px 0px 10px;
-         width: 220px;
-         display: block;
-
+         text-align: left;
+         margin: 0 20px 0 0 ;
+         background:rgba(163, 213, 194, 0.62);
        }
+}
 
-       &.realprice, &.availabel, &.quantity, &.discount {
-         display: block;
-         padding: 0 0 0 10px;
-       }
+       span {
+         &.description {
+           top: -10px;
+           font-size: 18px;
+           padding: 10px 2px 0px 0px;
+           width: 220px;
+           color: rgb(86, 86, 86);
+            display: inline;
+            background-color: green;
+              background:rgba(163, 213, 194, 0.82);
+         }
 
-       &.price {
-         margin-left: 0px;
-         font-size: 25px;
-         padding: 1px;
-       }
+         &.realprice, &.availabel, &.quantity, &.discount {
+           display: inline-grid;
+           padding: 0 0 0 20px;
+           margin: 0;
+           font-size: 16px;
+           border: 0;
+           text-align: left;
+         }
 
-       &.popularity {
-         margin-left: 0px;
-         font-size: 20px;
-         padding: 1px;
-         display: none;
-       }
-     } // end p
+         &.priceBox {
+           margin-left: 0px;
+           font-size: 25px;
+           padding: 0px;
+           margin: 0;
+           border: 0;
+           color: red;
+           display: block;
+         }
+
+         &.popularity {
+           margin-left: 0px;
+           font-size: 20px;
+           padding: 1px;
+           display: none;
+         } // &.popularity
+
+       } // end p
+
+   } // info
+
+   img {
+     position: absolute;
+     max-height: 600px;
+     width: 400px;
+     top: -100px;
+     z-index: 100000;
+   } // img
+
+
+     p.title {
+       display: none;
+       // width: 220px;
+     }
+
+     p.price {
+       display: none;
+
    }
-
-
   }
 
- }
+}// .image {
 }
 
 
