@@ -36,13 +36,13 @@
               @click="search"
               )
           br
-          br
+          rappi-car.shoppingCar( :car="car", @select="setSelectedProduct", @remove="removeProduct"  )
           br
       .productcontainer
        .product(v-for="p in products")
          rappi-product(
                :class="{ 'is-active': p.id === selectedProduct  }",
-               :product="p", @select="setSelectedProduct" )
+               :product="p", @select="setSelectedProduct", @remove="removeProduct" )
 
     rappi-footer
 </template>
@@ -59,19 +59,23 @@ import RappiProduct from '@/components/Product.vue'
 import RappiNotification from '@/components/shared/Notification.vue'
 import RappiLoader from '@/components/shared/Loader.vue'
 
+import RappiCar from '@/components/Car.vue'
+
 export default {
   name: 'app',
 
-  components: { RappiFooter, RappiHeader, RappiProduct, RappiLoader, RappiNotification },
+  components: { RappiCar, RappiFooter, RappiHeader, RappiProduct, RappiLoader, RappiNotification },
 
   data () {
     return {
       searchQuery: '',
       products: [],
+      car: { products: [], quantity: 0 },
       isLoading: false,
       isShowNotification: false,
 
       selectedProduct: '',
+
       apiUrl: 'https://www.rappi.com/api-services/windu/sub_corridors/store/6660307/corridor/126222'
     }
   },
@@ -105,15 +109,37 @@ export default {
         .then(res => {
           console.log(res)
           if (res.sub_corridors && res.sub_corridors.length > 0) {
+            for (let i = 0; i < res.sub_corridors[0].products.length; i++) {
+              res.sub_corridors[0].products[i].count_buy = 0
+            }
             this.products = res.sub_corridors[0].products
           }
           this.isLoading = false
         })
     },
 
-    setSelectedProduct (id) {
-      console.log(id)
-      this.selectedProduct = id
+    setSelectedProduct (product) {
+      // this.selectedProduct = product.id
+      product.count_buy += 1
+
+      var count = this.car.products.filter(element => element.id === product.id).reduce(function (previous, current) {
+        return previous + 1
+      }, 0)
+
+      if (count === 0) {
+        this.car.products.push(product)
+      }
+    },
+
+    removeProduct (product) {
+      console.log(product)
+      var count = this.car.products.filter(element => (element.id === product.id && product.count_buy > 0)).reduce(function (previous, current) {
+        return previous + 1
+      }, 0)
+      console.log(count)
+      if (count > 0) {
+        product.count_buy -= 1
+      }
     }
   }
 }
@@ -250,4 +276,9 @@ export default {
     padding: 10px;
 
    }
+
+   .shoppingCar{
+
+   }
+
 </style>
