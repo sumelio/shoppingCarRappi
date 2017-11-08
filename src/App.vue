@@ -2,29 +2,8 @@
   #app
     rappi-header
 
-    rappi-notification(v-show="isShowNotification")
-      p(slot="body") No se encontrarón resultados
-
-    rappi-loader(v-show="isLoading")
     section.section
       nav.nav
-        .container
-          label.title(for="apiUrl" ) Fake desde Rappi API URL
-          input.input.is-short(type="text", id="apiUrl" v-model="apiUrl")
-          br
-          table.table-api
-            tr
-              th tipo
-              th Url
-            tr
-              td Lacteos
-              td
-                | https://www.rappi.com/api-services/windu/sub_corridors/store/6660307/corridor/125772
-            tr
-              td Bebidas
-              td
-               | https://www.rappi.com/api-services/windu/sub_corridors/store/6660307/corridor/126222
-        br
         .container
         .search-input-container
           input.input.search-input(
@@ -36,15 +15,36 @@
               @click="search"
               )
           br
-          rappi-car.shoppingCar( :car="car", @select="setSelectedProduct", @remove="removeProduct"  )
+          rappi-car.shoppingCar(:class="{ 'is-active': true }", :car="car", @add="addProduct", @remove="removeProduct"  )
           br
+      rappi-notification(v-show="isShowNotification")
+        p(slot="body") No se encontrarón resultados
+
+      rappi-loader(v-show="isLoading")
       .productcontainer
-       .product(v-for="p in products")
+       .productClass(v-for="p in products")
          rappi-product(
                :class="{ 'is-active': p.id === selectedProduct  }",
-               :product="p", @select="setSelectedProduct", @remove="removeProduct" )
+               :product="p", @add="addProduct", @remove="removeProduct" )
 
     rappi-footer
+    .container
+      label.title(for="apiUrl" ) Fake desde Rappi API URL
+      input.input.is-short(type="text", id="apiUrl" v-model="apiUrl")
+      br
+      table.table-api
+        tr
+          th tipo
+          th Url
+        tr
+          td Lacteos
+          td
+            | https://www.rappi.com/api-services/windu/sub_corridors/store/6660307/corridor/125772
+        tr
+          td Bebidas
+          td
+           | https://www.rappi.com/api-services/windu/sub_corridors/store/6660307/corridor/126222
+    br
 </template>
 
 <script>
@@ -70,7 +70,7 @@ export default {
     return {
       searchQuery: '',
       products: [],
-      car: { products: [], quantity: 0 },
+      car: { products: [], quantity: 0, totalPrice: 0 },
       isLoading: false,
       isShowNotification: false,
 
@@ -80,17 +80,15 @@ export default {
     }
   },
 
-  computed: {
-    searchMessage () {
-      return `Encontrados: ${this.products.length}`
-    }
-  },
-
+  // computed: {
+  //   searchMessage () {
+  //     return `Encontrados: ${this.products.length}`
+  //   }
+  // },
   watch: {
     isShowNotification () {
       if (this.isShowNotification) {
         setTimeout(() => {
-          console.log(this.isShowNotification)
           this.isShowNotification = false
         }, 3000)
       }
@@ -118,27 +116,30 @@ export default {
         })
     },
 
-    setSelectedProduct (product) {
+    addProduct (product) {
       // this.selectedProduct = product.id
-      product.count_buy += 1
+      product.count_buy = product.count_buy + 1
+      this.selectedProduct = product.id
 
-      var count = this.car.products.filter(element => element.id === product.id).reduce(function (previous, current) {
+      var count = this.car.products.filter(element => (element.id === product.id && product.count_buy > 0)).reduce(function (previous, current) {
         return previous + 1
       }, 0)
 
       if (count === 0) {
         this.car.products.push(product)
       }
+
+      this.car.totalPrice += product.price
     },
 
     removeProduct (product) {
-      console.log(product)
       var count = this.car.products.filter(element => (element.id === product.id && product.count_buy > 0)).reduce(function (previous, current) {
         return previous + 1
       }, 0)
-      console.log(count)
+
       if (count > 0) {
         product.count_buy -= 1
+        this.car.totalPrice -= product.price
       }
     }
   }
@@ -152,18 +153,15 @@ export default {
     margin-top: 50px;
   }
 
-  .is-active {
 
-    border-top: 6px #23d160 solid;
-    border-radius: 25px;
-    box-shadow: 0 20px 30px rgba(230, 0, 38, 0.10), 0 0 0 1px rgba(230, 0, 38, 0.10);
-
-
-  }
   .productClass {
-    border: 2px solid;
-    border-radius: 25px;
-
+    // border: 2px solid;
+    // border-radius: 25px;
+    width: 290px;
+    height: 360px;
+    padding: 10px 0px 10px 0px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    border-radius: 16px;
   }
 
   html, body {
@@ -267,17 +265,18 @@ export default {
 
 
     .box {
-    background-color: white;
-    border-radius: 0px;
-    /* box-shadow: 0 2px 3px rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.1); */
-    box-shadow:  0 0px 0px rgba(0, 0, 0, 0.0), 0 0 0 0px rgba(0, 0, 0, 0.0);
-    color: white;
-    display: block;
-    padding: 10px;
-
+      background-color: white;
+      border-radius: 0px;
+      /* box-shadow: 0 2px 3px rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.1); */
+      box-shadow:  0 0px 0px rgba(0, 0, 0, 0.0), 0 0 0 0px rgba(0, 0, 0, 0.0);
+      color: white;
+      display: block;
+      padding: 10px;
    }
 
    .shoppingCar{
+     position: fixed;
+     top: 40px;
 
    }
 

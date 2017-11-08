@@ -1,7 +1,5 @@
 <template lang="pug">
    section
-     p
-     rappi-car
      .hero.is-success
      .hero-head
        header.nav
@@ -19,3 +17,9 @@ export default {
   components: { RappiCar }
 }
 </script>
+<style lang="scss" scoped>
+header.nav {
+  background-color: rgb(158, 211, 191);
+}
+
+</style>

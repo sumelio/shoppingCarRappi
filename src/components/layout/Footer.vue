@@ -2,6 +2,6 @@
    footer.footer
      .container
        .content.hast-text-centered
-         p with 💞 🎵 by @sumelios
-         p with 🇨🇴 by @sumelios
+         p with 💞 by
+          a(href="https://github.com/sumelio") @sumelio
 </template>
