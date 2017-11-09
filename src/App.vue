@@ -2,147 +2,21 @@
   #app
     rappi-header
 
-    section.section
-      nav.nav
-        .container
-        .search-input-container
-          input.input.search-input(
-              type="text", placeholder="Busca productos en la API de Rappi"
-              v-model="searchQuery"
-              )
-          span.search-reset
-          button.search-button.iconf-ico-buscar(
-              @click="search"
-              )
-          br
-          rappi-car.shoppingCar(:class="{ 'is-active': true }", :car="car", @add="addProduct", @remove="removeProduct"  )
-          br
-      rappi-notification(v-show="isShowNotification")
-        p(slot="body") No se encontrarón resultados
-
-      rappi-loader(v-show="isLoading")
-      .productcontainer
-       .productClass(v-for="p in products")
-         rappi-product(
-               :class="{ 'is-active': p.id === selectedProduct  }",
-               :product="p", @add="addProduct", @remove="removeProduct" )
+    router-view
 
     rappi-footer
-    .container
-      label.title(for="apiUrl" ) Fake desde Rappi API URL
-      input.input.is-short(type="text", id="apiUrl" v-model="apiUrl")
-      br
-      table.table-api
-        tr
-          th tipo
-          th Url
-        tr
-          td Lacteos
-          td
-            | https://www.rappi.com/api-services/windu/sub_corridors/store/6660307/corridor/125772
-        tr
-          td Bebidas
-          td
-           | https://www.rappi.com/api-services/windu/sub_corridors/store/6660307/corridor/126222
-    br
 </template>
 
 <script>
 
-import productService from '@/services/Products'
-
 import RappiFooter from '@/components/layout/Footer.vue'
 import RappiHeader from '@/components/layout/Header.vue'
-
-import RappiProduct from '@/components/Product.vue'
-
-import RappiNotification from '@/components/shared/Notification.vue'
-import RappiLoader from '@/components/shared/Loader.vue'
-
-import RappiCar from '@/components/Car.vue'
 
 export default {
   name: 'app',
 
-  components: { RappiCar, RappiFooter, RappiHeader, RappiProduct, RappiLoader, RappiNotification },
+  components: { RappiFooter, RappiHeader }
 
-  data () {
-    return {
-      searchQuery: '',
-      products: [],
-      car: { products: [], quantity: 0, totalPrice: 0 },
-      isLoading: false,
-      isShowNotification: false,
-
-      selectedProduct: '',
-
-      apiUrl: 'https://www.rappi.com/api-services/windu/sub_corridors/store/6660307/corridor/126222'
-    }
-  },
-
-  // computed: {
-  //   searchMessage () {
-  //     return `Encontrados: ${this.products.length}`
-  //   }
-  // },
-  watch: {
-    isShowNotification () {
-      if (this.isShowNotification) {
-        setTimeout(() => {
-          this.isShowNotification = false
-        }, 3000)
-      }
-    }
-  },
-
-  methods: {
-    search () {
-      // console.log(this.searchQuery)
-      // this.tracks = tracks
-      // if (!this.searchQuery.length > 0) { return }
-
-      this.isLoading = true
-      console.log(this.apiUrl)
-      productService.search(this.searchQuery, this.apiUrl)
-        .then(res => {
-          console.log(res)
-          if (res.sub_corridors && res.sub_corridors.length > 0) {
-            for (let i = 0; i < res.sub_corridors[0].products.length; i++) {
-              res.sub_corridors[0].products[i].count_buy = 0
-            }
-            this.products = res.sub_corridors[0].products
-          }
-          this.isLoading = false
-        })
-    },
-
-    addProduct (product) {
-      // this.selectedProduct = product.id
-      product.count_buy = product.count_buy + 1
-      this.selectedProduct = product.id
-
-      var count = this.car.products.filter(element => (element.id === product.id && product.count_buy > 0)).reduce(function (previous, current) {
-        return previous + 1
-      }, 0)
-
-      if (count === 0) {
-        this.car.products.push(product)
-      }
-
-      this.car.totalPrice += product.price
-    },
-
-    removeProduct (product) {
-      var count = this.car.products.filter(element => (element.id === product.id && product.count_buy > 0)).reduce(function (previous, current) {
-        return previous + 1
-      }, 0)
-
-      if (count > 0) {
-        product.count_buy -= 1
-        this.car.totalPrice -= product.price
-      }
-    }
-  }
 }
 </script>
 
@@ -162,6 +36,7 @@ export default {
     padding: 10px 0px 10px 0px;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
     border-radius: 16px;
+    margin: 5px; 
   }
 
   html, body {

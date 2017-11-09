@@ -70,7 +70,7 @@ export default {
 .box {
   position: relative;
   width: 95%;
-  height: 300px;
+  height: 290px; 
   i.addProduct {
     z-index: 10005;
     width: 40px;

@@ -15,7 +15,7 @@
             td
              img.imgCar(:src="product.image | absolutePath")
             td {{product.name}}
-            td $ {{product.price}}
+            td {{product.price | formatCurrency}}
             td
               .counter
                 .add
@@ -25,7 +25,7 @@
                 .remove
                   //i.removeProduct.buttonSmall(@click="product.count_buy ++") ➕
                   i.removeProduct.buttonSmall(@click="removeProduct(product)") ➖
-            td $ {{product.count_buy * product.price}}
+            td.priceTable  {{product.count_buy * product.price | formatCurrency}}
     .totalBuy {{ car.totalPrice | formatCurrency }}
 </template>
 
@@ -133,6 +133,12 @@
          word-wrap: break-word;
          font-size: 16px;
        }
+
+       td.priceTable {
+         text-align: right;
+         color: green;
+       }
+
       }
      } // table.scroll
   } // tableCar
@@ -244,4 +250,5 @@ i.removeProduct {
   justify-content: space-between;
   min-width: 50px;
 }
+
 </style>
