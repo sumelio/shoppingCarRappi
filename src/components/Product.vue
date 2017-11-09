@@ -70,7 +70,7 @@ export default {
 .box {
   position: relative;
   width: 95%;
-  height: 290px; 
+  height: 290px;
   i.addProduct {
     z-index: 10005;
     width: 40px;
@@ -121,13 +121,14 @@ export default {
       background: url(../assets/Selection_366.png) 100 100;
   }
   .countBuyProduct{
+    position: absolute;
     z-index: 10005;
     width: 50px;
     height: 50px;
     color: #f24e4e;
     font-size: 20px;
-    position: absolute;
     right: -20px;
+    top: 190px;
     bottom: 60px;
   }
   .headerBox{

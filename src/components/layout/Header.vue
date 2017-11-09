@@ -1,13 +1,13 @@
 <template lang="pug">
-   section
-     .hero.is-success
+   section.hero.is-success
      .hero-head
        header.nav
          .container
-           .nav-left
-             .nav-item
+           .nav-left.nav-item
                strong Rappidier..
            .nav-right.nav-menu
+             router-link.nav-item(to="/") Buscar
+             router-link.nav-item(to="about") Nosotros
 </template>
 
 <script>
@@ -18,6 +18,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+
 header.nav {
   background-color: rgb(158, 211, 191);
 }
