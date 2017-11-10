@@ -4,18 +4,12 @@
     .tableCar
       table.scroll
         thead
-          tr
-            th Producto
-            th Descripcion
-            th Precio
-            th Cantidad
-            th Total
         tbody
           tr(v-for="product in car.products" v-show="product.count_buy > 0" )
             td
-             img.imgCar(:src="product.image | absolutePath")
-            td {{product.name}}
-            td {{product.price | formatCurrency}}
+             .tooltip
+              img.imgCar(:src="product.image | absolutePath")
+              span.tooltiptext {{product.name}}, Precio: {{product.price | formatCurrency}}
             td
               .counter
                 .add
@@ -25,7 +19,10 @@
                 .remove
                   //i.removeProduct.buttonSmall(@click="product.count_buy ++") ➕
                   i.removeProduct.buttonSmall(@click="removeProduct(product)") ➖
+                .delete
+                  i(@click="deleteProduct(product)") ✖️
             td.priceTable  {{product.count_buy * product.price | formatCurrency}}
+      .totalBuyCar {{ car.totalPrice | formatCurrency }}
     .totalBuy {{ car.totalPrice | formatCurrency }}
 </template>
 
@@ -73,13 +70,17 @@
 
       removeProduct (product) {
         this.$emit('remove', product)
+      },
+
+      deleteProduct (product) {
+        this.$emit('delete', product)
       }
     }
   }
 </script>
 
 <style lang="scss" scoped >
-.boxCar{
+.boxCar {
   display: run-in;
   top: 10;
   right: 1;
@@ -108,6 +109,17 @@
    font-size: 12px;
    background: rgba(255, 255, 255, 0.55);
  }
+
+ .totalBuyCar {
+   display: none;
+ }
+
+ @media only screen and (max-width: 600px){
+   .totalBuy {
+     display: none;
+   }
+ }
+
  .tableCar {
    padding: 10px;
 
@@ -136,7 +148,6 @@
 
        td.priceTable {
          text-align: right;
-         color: green;
        }
 
       }
@@ -151,17 +162,22 @@
           box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
           border-radius: 15px;
           padding: 20px 15px 0px 0px;
-          width: 700px;
+          width: 300px;
           height: 300px;
           .carShopping{
             display: none;
           }
-          .totalBuy{
+          .totalBuyCar{
+            display: block;
             position: absolute;
             top: 250px;
             right: 140px;
             color: black;
             font-size: 16px;
+          }
+
+          .totalBuy{
+            display: none;
           }
 
          .tableCar {
@@ -197,6 +213,48 @@
                  border-right: 1px solid black;
                  word-wrap: break-word;
                  font-size: 16px;
+                 .tooltip {
+                   position: relative;
+                   display: inline-block;
+                   border-bottom: 1px dotted black;
+
+                   span.tooltiptext {
+                     z-index: 100000000;
+                     visibility: hidden;
+                     width: 150px;
+                     background-color: #555;
+                     color: #fff;
+                     text-align: center;
+                     border-radius: 6px;
+                     padding: 5px 0;
+                     position: absolute;
+                     bottom: -50px;
+                     left: -5px;
+                     margin-left: 60px;
+                     opacity: 0;
+                     transition: opacity 1s;
+                     &::after {
+                       content: "";
+                       position: absolute;
+                       top: 100%;
+                       left: 50%;
+
+                       //margin-left: -5px;
+                       border-width: 5px;
+                       border-style: solid;
+         @media only screen and (max-width: 600px){
+   .totalBuy {
+     display: none;
+   }
+ }               border-color: #555 transparent transparent transparent;
+                       //border: 1px red solid;
+                     }
+                   }
+                   &:hover .tooltiptext {
+                     visibility: visible;
+                     opacity: 1;
+                   }
+                 }
                }
               }
              } // table.scroll
@@ -204,8 +262,18 @@
 
   } // &:hover
 } // boxCar
+
+@media only screen and (max-width: 600px){
+  .boxCar {
+    padding: 3px;
+    width: 30px;
+    height: 30px;
+    background: rgba(255, 255, 255, 0.00);
+  }
+}
+
 img.imgCar{
-  width: 30px;
+  width: 80px;
   height: auto;
 }
 
@@ -245,10 +313,32 @@ i.removeProduct {
   }
 }
 
+
+i.deleteProduct {
+  z-index: 10002;
+  width: 50px;
+  height: 50px;
+  background: #f24e4e;
+  color: #fff;
+  border-radius: 25px;
+  text-align: center;
+  line-height: 38px;
+  font-size: 1.4rem;
+  box-shadow: 0 0 4px 2px rgba(80, 80, 80, 0.1);
+  cursor: pointer;
+  transition: all 0.3s;
+  &:hover {
+    transform: scale(1.15);
+  }
+}
+
 .counter{
+  display: -webkit-flex;
   display: flex;
-  justify-content: space-between;
-  min-width: 50px;
+  -webkit-flex-direction: column;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 5px;
 }
 
 </style>

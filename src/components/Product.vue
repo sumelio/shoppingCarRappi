@@ -69,6 +69,7 @@ export default {
   position: relative;
   width: 95%;
   height: 290px;
+  // border: red solid 1px;
   i.addProduct {
     z-index: 10005;
     width: 40px;

@@ -25,7 +25,15 @@
       tr
         td Desayunos
         td
-          | https://www.rappi.com/api-services/windu/sub_corridors/store/6660307/corridor/125841     
+          | https://www.rappi.com/api-services/windu/sub_corridors/store/6660307/corridor/125841
+      tr
+        td Papelería
+        td
+          | https://www.rappi.com/api-services/windu/sub_corridors/store/6660307/corridor/126239
+      tr
+        td Salud
+        td
+          | https://www.rappi.com/api-services/windu/sub_corridors/store/6660307/corridor/126306
 </template>
 
 <script>
