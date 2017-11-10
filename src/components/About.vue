@@ -25,7 +25,7 @@
       tr
         td Desayunos
         td
-          | https://www.rappi.com/api-services/windu/sub_corridors/store/6660307/corridor/125841
+          | https://www.rappi.com/api-services/windu/sub_corridors/store/6660307/corridor/125841     
 </template>
 
 <script>

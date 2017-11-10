@@ -3,6 +3,9 @@
     section.section
       nav.nav
         .container
+        .search-input-container API Rest
+           span :
+           a(:href="apiUrl" ) {{ apiUrl }}
         .search-input-container
           input.input.search-input(
               type="text", placeholder="Busca productos en la API de Rappi"
@@ -12,13 +15,26 @@
           button.search-button.iconf-ico-buscar(
               @click="search"
               )
-          br
+
           .search-input-container
-            select( v-model="categoryIndex")
-             option( disabled value="" ) Please select one
-             option(v-for="(c, index) in arrayApi ", :value="index") {{index}} - {{c.name}}
-          rappi-car.shoppingCar(:class="{ 'is-active': true }", :car="car", @add="addProduct", @remove="removeProduct"  )
-          br
+            label(:for="categoryIndex") Categoria:
+            select( v-model="categoryIndex" id="categoryIndex" v-on:change="search")
+             option( disabled value="" ) Por favor seleccione una categoria
+             option(v-for="(c, index) in arrayApi ", :value="index") {{c.name}}
+          .search-input-container Disponible:
+            label(for="availableFalse") Si
+            input(type="radio", v-model="isavailable", :value="true", id="is_available")
+            span.space-between
+            label(for="availableTrue") No
+            input(type="radio", v-model="isavailable", :value="false", id="is_available", @click="search"  )
+          .search-input-container Cantidad: Menor a {{quantity}}
+            span.space-between
+            input(type="range", v-model="quantity", :min="0", :max="1000", :value="false")
+          .search-input-container Mas populares: Menor a {{popularity}}
+            span.space-between
+            input(type="number", v-model="popularity", :min="0", :max="1000000", :value="false")
+
+        rappi-car.shoppingCar(:car="car", @add="addProduct", @remove="removeProduct"  )
       rappi-notification(v-show="isShowNotification")
         p(slot="body") No se encontrarón resultados
 
@@ -26,29 +42,13 @@
       .productcontainer
        .productClass(v-for="p in products")
          rappi-product(
-               :class="{ 'is-active': p.id === selectedProduct  }",
+               :class="{ '': p.id === selectedProduct  }",
                :product="p", @add="addProduct", @remove="removeProduct" )
        br
        br
       br
       br
       br
-      .container
-       label.title(for="apiUrl" ) Fake desde Rappi API URL
-       input.input.is-short(type="text", id="apiUrl" v-model="apiUrl")
-       br
-       table.table-api
-         tr
-           th tipo
-           th Url
-         tr
-           td Lacteos
-           td
-             | https://www.rappi.com/api-services/windu/sub_corridors/store/6660307/corridor/125772
-         tr
-           td Bebidas
-           td
-            | https://www.rappi.com/api-services/windu/sub_corridors/store/6660307/corridor/126222
 </template>
 
 <script>
@@ -76,35 +76,35 @@ export default {
       isShowNotification: false,
       arrayApi: [],
       selectedProduct: '',
-
-      apiUrl: 'https://www.rappi.com/api-services/windu/sub_corridors/store/6660307/corridor/126222'
+      categoryIndex: 0,
+      isavailable: true,
+      quantity: 10000,
+      popularity: 1000000
     }
   },
 
   props: { apiUrl: '' },
 
   created () {
-    this.isLoading = true
-    console.log(this.apiUrl)
+    console.log('load datos.................')
+    this.isLoading = false
     productService.search(this.searchQuery, this.apiUrl)
       .then(res => {
         console.log(res)
-        this.arrayApi = res.sub_corridors
         if (res.sub_corridors && res.sub_corridors.length > 0) {
-          for (let i = 0; i < res.sub_corridors[0].products.length; i++) {
-            res.sub_corridors[0].products[i].count_buy = 0
+          for (let i = 0; i < res.sub_corridors.length; i++) {
+            for (let j = 0; j < res.sub_corridors[i].products.length; j++) {
+              res.sub_corridors[i].products[j].count_buy = 0
+            }
           }
-          this.products = res.sub_corridors[0].products
         }
-        this.arrayApi = res.sub_corridors
         this.isLoading = false
+        this.arrayApi = res.sub_corridors
+        this.products = this.arrayApi[this.categoryIndex].products
+        this.isavailable = true
       })
   },
-  // computed: {
-  //   searchMessage () {
-  //     return `Encontrados: ${this.products.length}`
-  //   }
-  // },
+
   watch: {
     isShowNotification () {
       if (this.isShowNotification) {
@@ -112,28 +112,36 @@ export default {
           this.isShowNotification = false
         }, 3000)
       }
+    },
+
+    isavailable (newVal, oldVal) {
+      console.log('==========' + newVal)
+      this.isavailable = newVal
+      this.search()
+    },
+
+    quantity (newVal, oldVal) {
+      console.log('==========' + newVal)
+      this.quantity = newVal
+      this.search()
+    },
+
+    popularity (newVal, oldVal) {
+      console.log('==========' + newVal)
+      this.popularity = newVal
+      this.search()
     }
+
   },
 
   methods: {
     search () {
-      // console.log(this.searchQuery)
-      // this.tracks = tracks
-      // if (!this.searchQuery.length > 0) { return }
-
-      this.isLoading = true
-      console.log(this.apiUrl)
-      productService.search(this.searchQuery, this.apiUrl)
-        .then(res => {
-          console.log(res)
-          if (res.sub_corridors && res.sub_corridors.length > 0) {
-            for (let i = 0; i < res.sub_corridors[0].products.length; i++) {
-              res.sub_corridors[0].products[i].count_buy = 0
-            }
-            this.products = res.sub_corridors[0].products
-          }
-          this.isLoading = false
-        })
+      this.isLoading = true// var sefl = this
+      console.log('Buscando....' + this.is_available)
+      this.products = this.arrayApi[this.categoryIndex].products.filter(product => (
+        product.is_available === this.isavailable && product.quantity <= this.quantity && product.popularity <= this.popularity
+      ))
+      this.isLoading = false
     },
 
     addProduct (product) {
@@ -163,6 +171,13 @@ export default {
       }
     }
   }
+
+  // computed: {
+  //   categoryIndex () {
+  //     // return `Encontrados: ${this.products.length}`
+  //     // this.search()
+  //   }
+  // }
 }
 </script>
 
@@ -214,10 +229,11 @@ export default {
 
 
   .search-input-container{
-     width: 100%;
+     width: 80%;
      position: relative;
      display: inline-block;
      vertical-align: middle;
+     padding: 0 0 0 100px;
      zoom: 1;
     }
   .search-input {
@@ -263,21 +279,7 @@ export default {
       content: "🔍";
      }
 
-    .table-api{
-      width: 100%;
-      max-width: 800px;
-      margin-bottom: 20px;
-      // background-color: rgb(163, 213, 194 );
-      border-spacing: 2;
-      border-collapse: collapse;
-      border: 3px solid rgb(163, 213, 194 );
-      td, tr, th {
-        margin: 2px;
-        border: 3px solid rgb(163, 213, 194 );
-        padding: 10px;
-        background-color: white;
-      }
-    }
+
     label.title {
       color: rgb(163, 213, 194 );
     }
@@ -298,5 +300,7 @@ export default {
      top: 40px;
 
    }
-
+   .space-between{
+    padding: 10px;
+   }
 </style>

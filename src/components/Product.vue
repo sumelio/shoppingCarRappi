@@ -36,9 +36,7 @@ export default {
 
   methods: {
     addProduct () {
-      console.log(this.product)
       this.$emit('add', this.product)
-
       // this.$bus.$emit('set-product', this.product)
     },
 

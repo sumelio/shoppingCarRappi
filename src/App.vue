@@ -2,7 +2,7 @@
   #app
     rappi-header
 
-    router-view(:apiUrl='apiUrl')
+    router-view(:apiUrl="apiUrl")
 
     rappi-footer
 </template>
@@ -31,7 +31,6 @@ export default {
       // this.apiUrl = url
     })
   }
-
 }
 </script>
 
@@ -134,21 +133,7 @@ export default {
       content: "🔍";
      }
 
-    .table-api{
-      width: 100%;
-      max-width: 800px;
-      margin-bottom: 20px;
-      // background-color: rgb(163, 213, 194 );
-      border-spacing: 2;
-      border-collapse: collapse;
-      border: 3px solid rgb(163, 213, 194 );
-      td, tr, th {
-        margin: 2px;
-        border: 3px solid rgb(163, 213, 194 );
-        padding: 10px;
-        background-color: white;
-      }
-    }
+
     label.title {
       color: rgb(163, 213, 194 );
     }
