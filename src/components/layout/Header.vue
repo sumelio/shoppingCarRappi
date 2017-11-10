@@ -1,13 +1,13 @@
 <template lang="pug">
-   section.hero.is-success
-     .hero-head
-       header.nav
-         .container
-           .nav-left.nav-item
+   section
+       header
+         .containerHeader
+           .nav-center
                strong Rappidier..
-           .nav-right.nav-menu
-             router-link.nav-item(to="/") Buscar
-             router-link.nav-item(to="about") Nosotros
+       br
+       .nav-center
+         router-link.search-button-nav(to="/") Carrito
+         router-link.search-button-nav(to="about") Cambiar lA URL de la Api REST Rappi
 </template>
 
 <script>
@@ -19,8 +19,28 @@ export default {
 </script>
 <style lang="scss" scoped>
 
-header.nav {
+.containerHeader {
+  display: flex;
+  justify-content: space-between;
   background-color: rgb(158, 211, 191);
 }
+.nav-center{
+    width: 100%;
+    display: inline-block;
+    text-align: center;
+}
 
+.search-button-nav {
+    background: #FF7175;
+    color: #9faab7;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    color: #fff;
+    font-size: 14px;
+    text-align: center;
+    border: 0;
+    padding: 10px;
+    margin: 10px;
+}
 </style>

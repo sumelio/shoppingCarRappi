@@ -13,6 +13,10 @@
               @click="search"
               )
           br
+          .search-input-container
+            select( v-model="categoryIndex")
+             option( disabled value="" ) Please select one
+             option(v-for="(c, index) in arrayApi ", :value="index") {{index}} - {{c.name}}
           rappi-car.shoppingCar(:class="{ 'is-active': true }", :car="car", @add="addProduct", @remove="removeProduct"  )
           br
       rappi-notification(v-show="isShowNotification")
@@ -27,7 +31,7 @@
        br
        br
       br
-      br 
+      br
       br
       .container
        label.title(for="apiUrl" ) Fake desde Rappi API URL
@@ -70,13 +74,32 @@ export default {
       car: { products: [], quantity: 0, totalPrice: 0 },
       isLoading: false,
       isShowNotification: false,
-
+      arrayApi: [],
       selectedProduct: '',
 
       apiUrl: 'https://www.rappi.com/api-services/windu/sub_corridors/store/6660307/corridor/126222'
     }
   },
 
+  props: { apiUrl: '' },
+
+  created () {
+    this.isLoading = true
+    console.log(this.apiUrl)
+    productService.search(this.searchQuery, this.apiUrl)
+      .then(res => {
+        console.log(res)
+        this.arrayApi = res.sub_corridors
+        if (res.sub_corridors && res.sub_corridors.length > 0) {
+          for (let i = 0; i < res.sub_corridors[0].products.length; i++) {
+            res.sub_corridors[0].products[i].count_buy = 0
+          }
+          this.products = res.sub_corridors[0].products
+        }
+        this.arrayApi = res.sub_corridors
+        this.isLoading = false
+      })
+  },
   // computed: {
   //   searchMessage () {
   //     return `Encontrados: ${this.products.length}`
