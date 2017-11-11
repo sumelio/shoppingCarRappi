@@ -1,5 +1,5 @@
 <template lang="pug">
-  #app
+  main
     p(v-show="showValue") {{ value}}  <!-- display none-->
     p(v-if="showValue") {{ value}} <!-- No aparece el componente p-->
     p(v-else-if="false") {{ 'algo mas' }} <!-- else if-->
@@ -9,7 +9,7 @@
       li(v-for="item in items") {{ item }}
 
     div
-      h1 Contador
+      h1 CHild
       p {{ count }} {{stringTest}}
       p {{ getDouble }}
 
@@ -17,18 +17,15 @@
         button(@click="increment") +
         button(@click="increment10") + 10
         button(@click="decrement") -
-      div
-        Child
 </template>
 
 <script>
 // solo importo este objecto desde la librería
 import { mapState, mapMutations, mapGetters } from 'vuex'
-import Child from './Child.vue'
+
 export default {
   name: 'app',
 
-  components: {Child},
   // computed: {
   //   count () {
   //     return this.$store.state.count
