@@ -17,8 +17,9 @@
         button(@click="increment") +
         button(@click="increment10") + 10
         button(@click="decrement") -
+        button(@click="incrementAsync") + Async
       div
-        Child
+        Child ========================
 </template>
 
 <script>
@@ -77,6 +78,14 @@ export default {
         number: 10
       })
       // avisar que se va hacer
+    },
+
+    incrementAsync () {
+      this.$store.dispatch('incrementAsync', {
+        number: 2
+      }).then(() => {
+        console.log('Action termino')
+      })
     }
   }
 }
