@@ -9,7 +9,9 @@
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
   },
   "dependencies": {
-    "lodash": "^4.17.4",
+    "bulma": "^0.6.2",
+    "install": "^0.10.4",
+    "lodash": "^4.17.5",
     "trae": "^1.4.2",
     "vue": "^2.4.4",
     "vue-lodash": "^1.0.4",
