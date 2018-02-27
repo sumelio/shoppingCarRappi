@@ -43,13 +43,18 @@ npm i -s install bulma
 - eslint: Controla el estilo del código de tu equipo
 
 ``` bash
+npm i -D estlint
+
 npm install --save-dev eslint-config-standard eslint-plugin-standard eslint-plugin-promise eslint-plugin-import eslint-plugin-node
+
+npm i -D estlint-plugin-html
 ```
 
 - language-pug:
 
 ``` bash
- apm install language-pug
+ npm i -D pug pug-loader
+ 
 ```
 
 - Router de vue
