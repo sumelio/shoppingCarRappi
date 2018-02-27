@@ -1,9 +1,10 @@
-# shoppin-car-rappi
+## Objetivo del proyecto ShoppingCarRappi
 
-> Shopping car Rapii
+Este proyecto tiene como objetivo hacer un Fake del carrito de compras de Rappi usando las tecnologías de VueJS 2.5
 
-## Build Setup
+1. Instalar Node y el manejador de paquetes npm
 
+<<<<<<< HEAD
 ``` bash
 npm install -g @vue/cli
 
@@ -87,41 +88,52 @@ For detailed explanation on how things work, consult the [docs for vue-loader](h
 1. Step create project
 SImple webpck: webpack-simple
 Project name: shoppingCarRappi
+=======
+2. Instalar el plugin de Vue para Chrome
+  https://github.com/vuejs/vue-devtools
+>>>>>>> b19ca99668ce1661ebc5789c13743b46b1136fb9
 
-$ vue init webpack-simple shoppingCarRappi
 
+<<<<<<< HEAD
 Project name shoppin-car-rappi
 Project description Shopping car Rapii
 Author falemusb@correo.udistrital.edu.co
 Use sass? Yes
+=======
+>>>>>>> b19ca99668ce1661ebc5789c13743b46b1136fb9
 
-   vue-cli · Generated "shoppingCarRappi".
+3. Instalar el cli del Vue para crear el proyecto usando Webpack 
+  https://github.com/vuejs/vue-cli
 
-   To get started:
-
-     cd shoppingCarRappi
-     npm install
-     npm run dev
-
-2. Install dependecy
-
-shoppingCarRappi$ npm i
+``` bash
+npm install -g @vue/cli
+```
 
 
-http://ianaya89.com/articles
-
-### Español 🇪🇸
-
-Crea tu Sitio Web con Nuxt.js y GitHub Pages - 31 July 2017
-Vue.js ❤️ JSX - 16 July 2017
-Workshop: Rompiendo el Mundo Binario con Vue.js - 20 May 2017
-### English 🇬🇧
-
-Getting Started with SASS - 11 September 2015
-Once Pattern in JavaScript - 23 Augost 2015
-Using Custom Cursors with CSS - 3 January 2015
+2. Se creo el proyecto con el asistente
+``` bash
+vue init webpack-simple shoppingCarRapis
+```
 
 
+3. Se instalarón las dependencias iniciales
+``` bash
+npm i
+``` 
+
+
+4. Luego se instalarón los siguientes modulos a lo largo del proyecto
+
+- bulma: Es un framework CSS basado en Flexbox y Sass
+
+``` bash
+npm i -s install bulma
+```
+- Babel: Es un transpilador de código. 
+
+- sass: Es un metalenguaje de Hojas de Estilo en Cascada (CSS)
+
+<<<<<<< HEAD
 Config webpack.config
 
 ```json
@@ -133,31 +145,32 @@ Config webpack.config
         enforce: 'pre',
         include: [path.resolve(__dirname, './src')]
       },
-```
-npm i -D eslint-loader
+=======
+- eslint: Controla el estilo del código de tu equipo
 
-npm run dev
+``` bash
+npm i -D estlint
 
-- Para que funcioné con html el estint
+npm install --save-dev eslint-config-standard eslint-plugin-standard eslint-plugin-promise eslint-plugin-import eslint-plugin-node
 
-npm i -D eslint-plugin-html
-
-
-
-```json
-{
-  "extends": "standard",
-  "rules": {
-    "no-new": 0
-    },
-
-    "plugins" : ["html"]
-}
+npm i -D estlint-plugin-html
+>>>>>>> b19ca99668ce1661ebc5789c13743b46b1136fb9
 ```
 
-crea   ./scss/main.scss
+- language-pug:
 
+``` bash
+ npm i -D pug pug-loader
+ 
+```
 
+- Router de vue
+
+``` bash
+npm install vue-router
+npm install --save lodash vue-lodash
+
+<<<<<<< HEAD
   @import './scss/main.scss'
 
 ```css
@@ -167,15 +180,26 @@ html {
 }
 ```
 
-
-Todo lo que se instala debe aparecer en node_modules
-
-
-Del archivo crea   ./scss/main.scss importar
-
-@import '../../node_modules/bulma/bulma.sass'
+=======
+``` 
 
 
+
+
+## Servicios Rest para obtener imagenes e información de los productos
+>>>>>>> b19ca99668ce1661ebc5789c13743b46b1136fb9
+
+
+https://www.rappi.com/api-services/windu/products/store/99900037/sub_corridor/441301
+https://www.rappi.com/api-services/windu/sub_corridors/store/99900037/corridor/77135
+
+https://www.rappi.com/api-services/windu/products/store/99900037/sub_corridor/77135
+https://www.rappi.com/api-services/windu/sub_corridors/store/99900037/corridor/77135
+
+
+https://www.rappi.com/api-services/windu/sub_corridors/store/6660307/corridor/125827
+
+<<<<<<< HEAD
 
 
 https://www.rappi.com/api-services/windu/products/store/99900037/sub_corridor/441301
@@ -192,3 +216,16 @@ https://img.rappi.com/products/low/510872.png
 
 
 https://www.rappi.com/api-services/windu/sub_corridors/store/6660307/corridor/125772
+=======
+https://www.rappi.com/api-services/windu/sub_corridors/store/6660307/corridor/125827
+https://img.rappi.com/products/low/510872.png
+
+
+https://www.rappi.com/api-services/windu/sub_corridors/store/6660307/corridor/125772
+
+
+Plugin para ATOM
+
+
+https://atom.io/packages/language-vue
+>>>>>>> b19ca99668ce1661ebc5789c13743b46b1136fb9

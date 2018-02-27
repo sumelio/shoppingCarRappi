@@ -1,6 +1,11 @@
 .DS_Store
+<<<<<<< HEAD
 node_modules/
 -dist/
+=======
+--node_modules/
+--dist/
+>>>>>>> b19ca99668ce1661ebc5789c13743b46b1136fb9
 npm-debug.log
 yarn-error.log
 
