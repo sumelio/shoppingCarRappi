@@ -9,7 +9,7 @@
             td
              .tooltip
               img.imgCar(:src="product.image | absolutePath")
-              span.tooltiptext {{product.name}}, Precio: {{product.price | formatCurrency}}
+              span.tooltiptext {{product.name}}, Precio: {{product.price | numberToCurrency}}
             td
               .counter
                 .add
@@ -21,13 +21,16 @@
                   i.removeProduct.buttonSmall(@click="removeProduct(product)") ➖
                 .delete
                   i(@click="deleteProduct(product)") ✖️
-            td.priceTable  {{product.count_buy * product.price | formatCurrency}}
-      .totalBuyCar {{ car.totalPrice | formatCurrency }}
-    .totalBuy {{ car.totalPrice | formatCurrency }}
+            td.priceTable  {{product.count_buy * product.price | numberToCurrency}}
+      .totalBuyCar Cant: {{ car.quantity }} Total:{{ car.totalPrice | numberToCurrency }}
+    .quantity {{ car.totalPrice | numberToCurrency }}
 </template>
 
 <script>
+  import productMixin from '@/mixins/Product'
+
   export default {
+    mixins: [productMixin],
     data () {
       return {
         product: { type: Object, requiered: false },
@@ -44,38 +47,8 @@
       this.$bus.$on('set-product', (product) => {
         this.product = product
       })
-    },
-
-    filters: {
-      absolutePath (str) {
-        // return str + ' things'
-        return 'https://img.rappi.com/products/low/' + str
-      },
-
-      extractDescription  (str) {
-      // return str + ' things'
-        return str.split('.')[0]
-      },
-
-      formatCurrency (value) {
-        let val = (value / 1).toFixed(2).replace('.', ',')
-        return '$ ' + val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
-      }
-    },
-
-    methods: {
-      addProduct (product) {
-        this.$emit('add', product)
-      },
-
-      removeProduct (product) {
-        this.$emit('remove', product)
-      },
-
-      deleteProduct (product) {
-        this.$emit('delete', product)
-      }
     }
+
   }
 </script>
 
@@ -105,6 +78,16 @@
    position: absolute;
    width: 100px;
    color: black;
+   font-weight: bold;
+   font-size: 12px;
+   background: rgba(255, 255, 255, 0.55);
+ }
+
+ .quantity {
+   position: absolute;
+   width: 100px;
+   color: red;
+   top: 140%;
    font-weight: bold;
    font-size: 12px;
    background: rgba(255, 255, 255, 0.55);
@@ -170,13 +153,15 @@
           .totalBuyCar{
             display: block;
             position: absolute;
+            padding: 20px;
             top: 250px;
-            right: 140px;
+            width: 220px;
+            right: 80px;
             color: black;
             font-size: 16px;
           }
 
-          .totalBuy{
+          .totalBuy, .quantity{
             display: none;
           }
 
