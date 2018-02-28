@@ -34,21 +34,21 @@ main
                 .item
                   label(for="availableFalse") Si
                   span.space-between
-                  input(type="radio", v-model="isavailable", :value="true", id="is_available")
+                  input(type="radio", v-model="isavailable", id="is_available")
                   span.space-between
                   label(for="availableTrue") No
                   span.space-between
-                  input(type="radio", v-model="isavailable", :value="false", id="is_available", @click="search"  )
+                  input(type="radio", v-model="isavailable", id="is_available", @click="search"  )
               .contentfilter
                 .item Cantidad <= {{quantity}}
                 .item
-                  input(type="range", v-model="quantity", :min="0", :max="1000", :value="false")
+                  input(type="range", v-model="quantity", :min="0", :max="1000")
             .filters
               .contentfilter
                 .item Mas populares:
                 .item Menor a
                   span.space-between
-                  input(type="number", v-model="popularity", :min="0", :max="1000000", :value="false")
+                  input(type="number", v-model="popularity", :min="0", :max="1000000")
               .contentfilter
                 .item Precio mayor a
                 .item
@@ -372,7 +372,7 @@ main
   }
 
   .search-input-container{
-     width: 80%;
+     width: 100%;
      position: relative;
      display: inline-block;
      vertical-align: middle;
@@ -381,18 +381,18 @@ main
     }
   .search-input {
     position: relative;
-    height: 40px;
-    padding: 10px 60px 20px 20px;
+    height: 60px;
+    padding: 10px 60px 10px 20px;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     width: 100%;
-    line-height: 30px;
+    line-height: 90px;
     background: #fff;
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
     border-radius: 4px;
-    font-size: 14px;
+    font-size: 20px;
     }
 
     .search-button {
