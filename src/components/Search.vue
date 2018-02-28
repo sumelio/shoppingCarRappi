@@ -381,8 +381,7 @@ main
     }
   .search-input {
     position: relative;
-    height: 60px;
-    padding: 10px 60px 10px 20px;
+    height: 40px;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
