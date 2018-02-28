@@ -2,7 +2,7 @@
 main
   .sectionSearch
        rp-car.shoppingCar(:car="car", @add="addProduct", @remove="removeProduct", @delete="deleteProduct" )
-       rappi-notification(v-show="isShowNotification")
+       rp-notification(v-show="isShowNotification")
         p(slot="body") No se encontrarón resultados
        .centerTitle Carrito
        .sectionFilter
@@ -19,75 +19,82 @@ main
          .item.center-item
             button.button(v-show="!showFilter",  @click="showFilterOn") Ocultar filtros
             button.button-green(v-show="showFilter",  @click="hideFilter") Mostrar filtros
-         .contentfilter.green(:class="{'hide':showFilter}")
-            .filters
-              .contentfilter
-                .item
-                  label(:for="categoryIndex") Categoria:
-                  span.space-between
-                .item
-                  select( v-model="categoryIndex" id="categoryIndex" v-on:change="search")
-                   option( disabled value="" ) Seleccione una categoria
-                   option(v-for="(c, index) in arrayApi ", :value="index") {{c.name}}
-              .contentfilter
-                .item Disponible:
-                .item
-                  label(for="availableFalse") Si
-                  span.space-between
-                  input(type="radio", v-model="isavailable", id="is_available")
-                  span.space-between
-                  label(for="availableTrue") No
-                  span.space-between
-                  input(type="radio", v-model="isavailable", id="is_available", @click="search"  )
-              .contentfilter
-                .item Cantidad <= {{quantity}}
-                .item
-                  input(type="range", v-model="quantity", :min="0", :max="1000")
-            .filters
-              .contentfilter
-                .item Mas populares:
-                .item Menor a
-                  span.space-between
-                  input(type="number", v-model="popularity", :min="0", :max="1000000")
-              .contentfilter
-                .item Precio mayor a
-                .item
-                  span $
-                  span.space-between
-                  input(type="number", v-model="minPrice", :min="1000000.00", :max="1000000.00")
-              .contentfilter
-                .item Precio menor a
-                .item
-                  span $
-                  span.space-between
-                  input(type="number", v-model="maxPrice", :min="1000000.00", :max="1000000.00")
-              .contentfilter
-                .item
-                  label(:for="orderBy") Ordernar por:
-                .item
-                  select( v-model="orderBy" id="orderBy" )
-                   option( :value="1" ) Nombre
-                   option( :value="2" ) Precio descendente
-                   option( :value="3" ) Precio ascendente
-       rappi-loader(v-show="isLoading")
+         transition(name="slide-fade")
+           .contentfilter.green(:class="{'hide':false}", v-show="!showFilter")
+              .filters
+                .contentfilter
+                  .item
+                    label(:for="categoryIndex") Categoria:
+                    span.space-between
+                  .item
+                    select( v-model="categoryIndex" id="categoryIndex" v-on:change="search")
+                     option( disabled value="" ) Seleccione una categoria
+                     option(v-for="(c, index) in arrayApi ", :value="index") {{c.name}}
+                .contentfilter
+                  .item Disponible:
+                  .item
+                    label(for="availableFalse") Si
+                    span.space-between
+                    input(type="radio", v-model="isavailable", :value="true", id="is_available")
+                    span.space-between
+                    label(for="availableTrue") No
+                    span.space-between
+                    input(type="radio", v-model="isavailable", id="is_available", @click="search"  )
+                .contentfilter
+                  .item Cantidad <= {{quantity}}
+                  .item
+                    input(type="range", v-model="quantity", :min="0", :max="1000")
+              .filters
+                .contentfilter
+                  .item Mas populares:
+                  .item Menor a
+                    span.space-between
+                    input(type="number", v-model="popularity", :min="0", :max="1000000")
+                .contentfilter
+                  .item Precio mayor a
+                  .item
+                    span $
+                    span.space-between
+                    input(type="number", v-model="minPrice", :min="1000000.00", :max="1000000.00")
+                .contentfilter
+                  .item Precio menor a
+                  .item
+                    span $
+                    span.space-between
+                    input(type="number", v-model="maxPrice", :min="1000000.00", :max="1000000.00")
+                .contentfilter
+                  .item
+                    label(:for="orderBy") Ordernar por:
+                  .item
+                    select( v-model="orderBy" id="orderBy" )
+                     option( :value="1" ) Nombre
+                     option( :value="2" ) Precio descendente
+                     option( :value="3" ) Precio ascendente
+       transition(name="move")
+         rp-loader(v-show="isLoading")
        .productcontainer
         .productClass(v-for="p in orderedProducts")
-          rappi-product(
-                :class="{ '': p.id === selectedProduct  }",
-                :product="p", @add="addProduct", @remove="removeProduct" )
+          transition-group(name="card")
+            rp-product.card(
+                  v-blur="p.popularity",
+                  :key="p.id"
+                  :class="{ '': p.id === selectedProduct  }",
+                  :product="p", @add="addProduct", @remove="removeProduct" )
 </template>
 
 <script>
   import productService from '@/services/Products'
-  import RappiProduct from '@/components/Product.vue'
-  import RappiNotification from '@/components/shared/Notification.vue'
-  import RappiLoader from '@/components/shared/Loader.vue'
+  import RpProduct from '@/components/Product.vue'
+  import RpNotification from '@/components/shared/Notification.vue'
+  import RpLoader from '@/components/shared/Loader.vue'
   import RpCar from '@/components/Car.vue'
+  import RpProductDetail from '@/components/ProductDetail.vue'
   import Lodash from 'lodash'
+
   export default {
     name: 'app',
 
-    components: { RpCar, RappiProduct, RappiLoader, RappiNotification },
+    components: { 'rp-prod-detail': RpProductDetail, RpCar, RpProduct, RpLoader, RpNotification },
 
     data () {
       return {
@@ -112,8 +119,7 @@ main
     props: { apiUrl: '' },
 
     created () {
-      console.log('load datos.................')
-      this.isLoading = false
+      this.isLoading = true
       productService.search(this.searchQuery, this.apiUrl)
         .then(res => {
           console.log(res)
@@ -133,6 +139,7 @@ main
 
     watch: {
       isShowNotification () {
+        this.isShowNotification = true
         if (this.isShowNotification) {
           setTimeout(() => {
             this.isShowNotification = false
@@ -141,7 +148,6 @@ main
       },
 
       isavailable (newVal, oldVal) {
-        console.log('==========' + newVal)
         this.isavailable = newVal
         this.search()
       },
@@ -176,7 +182,6 @@ main
     methods: {
       search () {
         this.isLoading = true// var sefl = this
-        console.log('Buscando....' + this.is_available)
         this.products = this.arrayApi[this.categoryIndex].products.filter(product => (
           product.is_available === this.isavailable &&
           product.quantity <= this.quantity &&
@@ -202,6 +207,7 @@ main
         }
 
         this.car.totalPrice += product.price
+        this.car.quantity += 1
       },
 
       removeProduct (product) {
@@ -212,6 +218,7 @@ main
         if (count > 0) {
           product.count_buy -= 1
           this.car.totalPrice -= product.price
+          this.car.quantity -= 1
         }
       },
 
@@ -221,6 +228,7 @@ main
         }, 0)
 
         if (count > 0) {
+          this.car.quantity -= product.count_buy
           product.count_buy = 0
           this.car.totalPrice -= product.price
         }
@@ -232,6 +240,14 @@ main
 
       hideFilter () {
         this.showFilter = false
+      },
+
+      showAllInfo () {
+        this.isShowAllInfo = true
+      },
+
+      hideAllInfo () {
+        this.isShowAllInfo = false
       }
     },
 
@@ -372,7 +388,7 @@ main
   }
 
   .search-input-container{
-     width: 100%;
+     width: 80%;
      position: relative;
      display: inline-block;
      vertical-align: middle;
@@ -386,7 +402,7 @@ main
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     width: 100%;
-    line-height: 90px;
+    line-height: 30px;
     background: #fff;
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
@@ -522,4 +538,7 @@ main
    .hide {
      display: none;
    }
+
+
+
 </style>

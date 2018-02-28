@@ -1,11 +1,17 @@
 <template lang="pug">
 .box
-  i.addProduct.fa.fa-plus(@click="addProduct")
-  i.removeProduct.fa.fa-menus(:class="{'hide': product.count_buy < 1 }", @click="removeProduct")
+  i.addProduct.fa.fa-plus(@click="addProduct(product)")
+  i.removeProduct.fa.fa-menus(:class="{'hide': product.count_buy < 1 }", @click="removeProduct(product)")
   .countBuyProduct.fa(:class="{'hide': product.count_buy < 1 }" ) {{   product.count_buy  }}
   img.item_data.img(:src="product.image | absolutePath")
   .headerBox
-    .price {{ product.price | formatCurrency }}
+    .label
+      .price
+        button(@click="showAllInfo") Mostar todo
+        .windowsAllInfo(v-show="isShowAllInfo")
+          a(@click="hideAllInfo") X cerrar
+          rp-prod-detail.showAllInfoBox( :productDetail="product")
+      .price {{ product.price | numberToCurrency }}
     .titleBox {{ product.name }}
   .image
     .showDetail
@@ -16,51 +22,48 @@
         ul
           // img.imgBox(:src="product.image | absolutePath")
           li {{ product.description | extractDescription }}
-          li {{ product.price | formatCurrency }}
+          li {{ product.price | numberToCurrency }}
           li {{ product.have_discount ? 'Con' : 'Sin' }} descuento
           li {{ product.is_available ? 'D' : 'No d' }}isponible
           li Cantidad {{ product.quantity }}
           li Popularidad {{ product.popularity }}
+  .showAllInfo
 </template>
 
 <script>
-import RappiCar from '@/components/Car.vue'
+// import RpCar from '@/components/Car.vue'
+import RpProductDetail from '@/components/ProductDetail.vue'
+import productMixin from '@/mixins/Product'
 
 export default {
-  components: { RappiCar },
+  mixins: [ productMixin ],
+
+  name: 'product',
+
+  components: { 'rp-prod-detail': RpProductDetail },
 
   props: {
     product: { type: Object, requiered: true },
     car: { type: Object, requiered: true }
   },
 
-  methods: {
-    addProduct () {
-      this.$emit('add', this.product)
-      // this.$bus.$emit('set-product', this.product)
-    },
-
-    removeProduct () {
-      this.$emit('remove', this.product)
+  data () {
+    return {
+      isShowAllInfo: false
     }
   },
 
-  filters: {
-    absolutePath (str) {
-      // return str + ' things'
-      return 'https://img.rappi.com/products/low/' + str
+  methods: {
+
+    showAllInfo () {
+      this.isShowAllInfo = true
     },
 
-    extractDescription  (str) {
-    // return str + ' things'
-      return str.split('.')[0]
-    },
-
-    formatCurrency (value) {
-      let val = (value / 1).toFixed(2).replace('.', ',')
-      return '$ ' + val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+    hideAllInfo () {
+      this.isShowAllInfo = false
     }
   }
+
 }
 </script>
 
@@ -140,11 +143,13 @@ export default {
       color: gray;
       line-height: normal;
     }
-    .price {
+    .label {
       margin-left: 0px;
       font-size: 18px;
       padding: 0 0 0 10px;
       color: black;
+      display: flex;
+      justify-content: space-between;
     }
   }
   img {
@@ -269,5 +274,26 @@ export default {
 
 .hide {
   display: none;
+}
+
+.boxShowAll {
+  //border: red 2px solid;
+}
+
+.showAllInfoBox {
+   background-color: rgb(158, 211, 191);
+   width: 260px;
+   height: 260px;
+   overflow: scroll;
+}
+.windowsAllInfo {
+  position: absolute;
+  z-index: 1000000;
+  border: 1px black solid;
+  top: 5px;
+  width: 260px;
+  height: 280px;
+  text-align: left;
+  background-color: black;
 }
 </style>
