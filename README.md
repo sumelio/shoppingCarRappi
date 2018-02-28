@@ -93,3 +93,10 @@ Plugin para ATOM
 
 
 https://atom.io/packages/language-vue
+
+``` bash
+apm install atom-axios
+apm install vue-format
+
+```
+
