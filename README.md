@@ -3,6 +3,28 @@
 Este proyecto tiene como objetivo hacer un Fake del carrito de compras de Rappi usando las tecnologías de VueJS 2.5
 La página esta publicada en github https://sumelio.github.io/shoppingCarRappi/#/
 
+# Como ejecutar el proyecto en un ambiente local
+
+1. En la carpeta raíz ejecutar:
+``` bash
+npm install
+```
+2. Ejecutar el proyecto mode desarrollo
+
+``` bash
+npm run dev
+```
+
+NOTA: Editar el archvio index.html:
+
+``` html
+  <body>
+    <div id="app"></div>
+    <script src="/dist/build.js"></script>
+  </body>
+``` 
+
+# Configuración de ambiente de desarrollo
 
 1. Instalar Node y el manejador de paquetes npm
 
