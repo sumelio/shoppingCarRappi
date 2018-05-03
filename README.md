@@ -9,13 +9,8 @@ La página esta publicada en github https://sumelio.github.io/shoppingCarRappi/#
 ``` bash
 npm install
 ```
-2. Ejecutar el proyecto mode desarrollo
 
-``` bash
-npm run dev
-```
-
-NOTA: Editar el archvio index.html:
+2. Editar el archvio index.html:
 
 ``` html
   <body>
@@ -23,6 +18,13 @@ NOTA: Editar el archvio index.html:
     <script src="/dist/build.js"></script>
   </body>
 ``` 
+
+3. Ejecutar el proyecto mode desarrollo
+
+``` bash
+npm run dev
+```
+
 
 # Configuración de ambiente de desarrollo
 
