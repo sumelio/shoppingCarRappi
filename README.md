@@ -19,7 +19,7 @@ npm install
   </body>
 ``` 
 
-3. Ejecutar el proyecto mode desarrollo
+3. Ejecutar el proyecto modo desarrollo
 
 ``` bash
 npm run dev
